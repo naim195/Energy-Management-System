@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Card from "./ui/Card";
 import CardContent from "./ui/CardContent";
 import {
@@ -14,12 +15,18 @@ import {
 import PropTypes from "prop-types";
 
 const Home = () => {
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
+
   return (
-    <div className="bg-gradient-to-b from-blue-100 to-green-100 min-h-screen flex flex-col items-center justify-center p-6">
-      <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
-        <Card className="max-w-5xl w-full bg-white rounded-xl shadow-2xl overflow-hidden">
+    <div className="bg-gradient-to-b from-blue-200 to-green-200 min-h-screen flex flex-col items-center justify-center p-6 transition-all duration-1000 ease-in-out">
+      <div className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} transition-all duration-1000 ease-in-out`}>
+        <Card className="max-w-5xl w-full bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-105">
           <CardContent className="p-8">
-            <h1 className="text-5xl font-extrabold text-blue-800 mb-6 text-center">
+            <h1 className="text-5xl font-extrabold text-blue-800 mb-6 text-center animate-pulse">
               Energy Management System (EMS)
             </h1>
 
@@ -44,7 +51,7 @@ const Home = () => {
               <h2 className="text-2xl font-bold text-blue-700 mb-4">
                 Power Flow Animation
               </h2>
-              <div className="relative pt-[56.25%] rounded-lg overflow-hidden shadow-xl">
+              <div className="relative pt-[56.25%] rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
                 <video
                   src="src/assets/power_flow_animation.mp4"
                   className="absolute top-0 left-0 w-full h-full "
@@ -58,7 +65,7 @@ const Home = () => {
 
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-1">
-                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner">
+                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner hover:shadow-md transition-shadow duration-300">
                   <h2 className="text-2xl font-bold text-blue-700 mb-4">
                     Key Features:
                   </h2>
@@ -75,7 +82,7 @@ const Home = () => {
                 </Card>
               </div>
               <div className="flex-1 m-auto">
-                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner ">
+                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner hover:shadow-md transition-shadow duration-300">
                   <h3 className="text-xl font-semibold text-blue-800 mb-4">
                     Power Flow Dynamics
                   </h3>
@@ -92,7 +99,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-green-50 rounded-lg shadow-inner">
+            <div className="mt-8 p-4 bg-green-50 rounded-lg shadow-inner hover:shadow-md transition-shadow duration-300">
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Energy Optimization Strategy
               </h3>
@@ -107,11 +114,11 @@ const Home = () => {
 
             <div className="flex justify-center items-center space-x-6 mt-6 text-gray-600">
               <div className="flex items-center">
-                <ArrowBigDown className="text-green-500 mr-2" size={24} />
+                <ArrowBigDown className="text-green-500 mr-2 animate-bounce" size={24} />
                 <span>Low Cost</span>
               </div>
               <div className="flex items-center">
-                <ArrowBigUp className="text-red-500 mr-2" size={24} />
+                <ArrowBigUp className="text-red-500 mr-2 animate-bounce" size={24} />
                 <span>High Cost</span>
               </div>
             </div>
@@ -123,7 +130,7 @@ const Home = () => {
 };
 
 const FeatureItem = ({ icon: Icon, title, description }) => (
-  <li className="flex items-start space-x-3">
+  <li className="flex items-start space-x-3 hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300">
     <div className="flex-shrink-0">
       <Icon className="text-blue-500" size={24} />
     </div>
@@ -135,8 +142,8 @@ const FeatureItem = ({ icon: Icon, title, description }) => (
 );
 
 const PowerFlowItem = ({ icon: Icon, text }) => (
-  <li className="flex items-center space-x-3 text-gray-700">
-    <Icon className="text-blue-600" size={20} />
+  <li className="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300">
+    <Icon className="text-blue-600 animate-spin-slow" size={20} />
     <span>{text}</span>
   </li>
 );
