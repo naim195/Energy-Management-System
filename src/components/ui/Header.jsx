@@ -23,7 +23,7 @@ export default function Header() {
             <span className="sr-only">Your Company</span>
             <img
               alt="Your Company"
-              src="src/assets/Spel.png"
+              src="/assets/Spel.png"
               className="h-8 w-auto"
             />
           </Link>
@@ -43,8 +43,8 @@ export default function Header() {
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              alt="Your Company"
-              src="src/assets/IITGN_logo.webp"
+              alt="IITGN logo"
+              src="/assets/IITGN_logo.webp"
               className="h-8 w-auto"
             />
           </Link>
@@ -71,8 +71,8 @@ export default function Header() {
             <Link to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
-                alt="Your Company"
-                src="src/assets/IITGN_logo.webp"
+                alt="IITGN logo"
+                src="/assets/IITGN_logo.webp"
                 className="h-8 w-auto"
               />
             </Link>

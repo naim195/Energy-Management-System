@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import Card from "./ui/Card";
 import CardContent from "./ui/CardContent";
 import {
@@ -23,7 +23,9 @@ const Home = () => {
 
   return (
     <div className="bg-gradient-to-b from-blue-200 to-green-200 min-h-screen flex flex-col items-center justify-center p-6 transition-all duration-1000 ease-in-out">
-      <div className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} transition-all duration-1000 ease-in-out`}>
+      <div
+        className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} transition-all duration-1000 ease-in-out`}
+      >
         <Card className="max-w-5xl w-full bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-105">
           <CardContent className="p-8">
             <h1 className="text-5xl font-extrabold text-blue-800 mb-6 text-center animate-pulse">
@@ -53,7 +55,7 @@ const Home = () => {
               </h2>
               <div className="relative pt-[56.25%] rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
                 <video
-                  src="src/assets/power_flow_animation.mp4"
+                  src="/assets/power_flow_animation.mp4"
                   className="absolute top-0 left-0 w-full h-full "
                   controls
                   autoPlay
@@ -114,11 +116,17 @@ const Home = () => {
 
             <div className="flex justify-center items-center space-x-6 mt-6 text-gray-600">
               <div className="flex items-center">
-                <ArrowBigDown className="text-green-500 mr-2 animate-bounce" size={24} />
+                <ArrowBigDown
+                  className="text-green-500 mr-2 animate-bounce"
+                  size={24}
+                />
                 <span>Low Cost</span>
               </div>
               <div className="flex items-center">
-                <ArrowBigUp className="text-red-500 mr-2 animate-bounce" size={24} />
+                <ArrowBigUp
+                  className="text-red-500 mr-2 animate-bounce"
+                  size={24}
+                />
                 <span>High Cost</span>
               </div>
             </div>
