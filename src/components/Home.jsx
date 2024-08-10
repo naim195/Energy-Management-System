@@ -22,52 +22,52 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-blue-200 to-green-200 min-h-screen flex flex-col items-center justify-center p-6 transition-all duration-1000 ease-in-out">
+    <div className="bg-gradient-to-b from-blue-200 to-green-200 min-h-screen flex flex-col items-center justify-center p-5">
       <div
-        className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} transition-all duration-1000 ease-in-out`}
+        className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >
-        <Card className="max-w-5xl w-full bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-105">
+        <Card className="max-w w-full bg-white rounded-xl shadow-2xl ">
           <CardContent className="p-8">
-            <h1 className="text-5xl font-extrabold text-blue-800 mb-6 text-center animate-pulse">
+            <h1 className="text-5xl font-extrabold text-blue-800 mb-8 text-center">
               Energy Management System (EMS)
             </h1>
 
-            {/* Main paragraph */}
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              This animation demonstrates the flow of power in an Energy
-              Management System (EMS). All the components in the EMS are
-              connected to the EMS device, which decides the power flow from
-              each component depending on availability and the cost associated
-              with it. If the cost associated with the power is high, then the
-              power flow will be from other available sources with low cost. The
-              charge and discharge of the battery is also shown in the
-              animation. The battery is charged when the cost of the power is
-              low and discharged when the cost of the power is high. We can see
-              that there are also power flows from Renewable and Diesel to the
-              grid, which indicates that the power is being sold to the grid and
-              making a profit.
-            </p>
-
-            {/* Video animation */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-blue-700 mb-4">
-                Power Flow Animation
-              </h2>
-              <div className="relative pt-[56.25%] rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
-                <video
-                  src="/assets/power_flow_animation.mp4"
-                  className="absolute top-0 left-0 w-full h-full "
-                  controls
-                  autoPlay
-                  loop
-                  muted
-                />
+            <div className="grid grid-cols-2 gap-20">
+              {/* Main paragraph */}
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed text-center my-auto">
+                This animation demonstrates the flow of power in an Energy
+                Management System (EMS). All the components in the EMS are
+                connected to the EMS device, which decides the power flow from
+                each component depending on availability and the cost associated
+                with it. If the cost associated with the power is high, then the
+                power flow will be from other available sources with low cost.
+                The charge and discharge of the battery is also shown in the
+                animation. The battery is charged when the cost of the power is
+                low and discharged when the cost of the power is high. We can
+                see that there are also power flows from Renewable and Diesel to
+                the grid, which indicates that the power is being sold to the
+                grid and making a profit.
+              </p>
+              {/* Video animation */}
+              <div className="my-auto">
+                <h2 className="text-2xl font-bold text-blue-700 mb-2">
+                  Power Flow Animation
+                </h2>
+                <div className="relative pt-[76.25%] rounded-lg overflow-hidden shadow-xl">
+                  <video
+                    src="/assets/power_flow_animation.mp4"
+                    className="absolute top-0 left-0 w-full h-full"
+                    autoPlay
+                    loop
+                    muted
+                  />
+                </div>
               </div>
             </div>
 
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-1">
-                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner hover:shadow-md transition-shadow duration-300">
+                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner">
                   <h2 className="text-2xl font-bold text-blue-700 mb-4">
                     Key Features:
                   </h2>
@@ -84,7 +84,7 @@ const Home = () => {
                 </Card>
               </div>
               <div className="flex-1 m-auto">
-                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner hover:shadow-md transition-shadow duration-300">
+                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner">
                   <h3 className="text-xl font-semibold text-blue-800 mb-4">
                     Power Flow Dynamics
                   </h3>
@@ -101,7 +101,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-green-50 rounded-lg shadow-inner hover:shadow-md transition-shadow duration-300">
+            <div className="mt-8 p-4 bg-green-50 rounded-lg shadow-inner">
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Energy Optimization Strategy
               </h3>
@@ -116,17 +116,11 @@ const Home = () => {
 
             <div className="flex justify-center items-center space-x-6 mt-6 text-gray-600">
               <div className="flex items-center">
-                <ArrowBigDown
-                  className="text-green-500 mr-2 animate-bounce"
-                  size={24}
-                />
+                <ArrowBigDown className="text-green-500 mr-2" size={24} />
                 <span>Low Cost</span>
               </div>
               <div className="flex items-center">
-                <ArrowBigUp
-                  className="text-red-500 mr-2 animate-bounce"
-                  size={24}
-                />
+                <ArrowBigUp className="text-red-500 mr-2" size={24} />
                 <span>High Cost</span>
               </div>
             </div>
@@ -138,7 +132,7 @@ const Home = () => {
 };
 
 const FeatureItem = ({ icon: Icon, title, description }) => (
-  <li className="flex items-start space-x-3 hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300">
+  <li className="flex items-start space-x-3 hover:bg-blue-100 p-2 rounded-lg">
     <div className="flex-shrink-0">
       <Icon className="text-blue-500" size={24} />
     </div>
@@ -150,8 +144,8 @@ const FeatureItem = ({ icon: Icon, title, description }) => (
 );
 
 const PowerFlowItem = ({ icon: Icon, text }) => (
-  <li className="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300">
-    <Icon className="text-blue-600 animate-spin-slow" size={20} />
+  <li className="flex items-center space-x-3 text-gray-700">
+    <Icon className="text-blue-600" size={20} />
     <span>{text}</span>
   </li>
 );

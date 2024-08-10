@@ -1,30 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navigationItems = [
   { name: "Home", href: "/" },
   { name: "User Interaction", href: "/user-interaction" },
-  { name: "Graphs", href: "/graphs" },
+  { name: "Impact", href: "/impact" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <header className="bg-white">
+    <header className="bg-white  w-full z-10 h-25">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="flex max-w-full items-center justify-between p-6 lg:px-8 h-full"
       >
-        <div className="hidden lg:flex lg:flex-1 lg:justify-start">
+        <div className="flex lg:flex-1 lg:justify-start">
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
               alt="Your Company"
               src="/assets/Spel.png"
-              className="h-8 w-auto"
+              className="h-20 w-auto"
             />
           </Link>
         </div>
@@ -33,19 +34,23 @@ export default function Header() {
             <Link
               key={item.name}
               to={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900"
+              className={`text-sm font-semibold leading-6 px-3 py-2 rounded-lg ${
+                location.pathname === item.href
+                  ? "text-white bg-blue-600"
+                  : "text-gray-900 hover:bg-gray-100"
+              }`}
             >
               {item.name}
             </Link>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="flex lg:flex-1 lg:justify-end">
           <Link to="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            <span className="sr-only">IITGN</span>
             <img
               alt="IITGN logo"
               src="/assets/IITGN_logo.webp"
-              className="h-8 w-auto"
+              className="h-20 w-auto"
             />
           </Link>
         </div>
@@ -69,11 +74,11 @@ export default function Header() {
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+              <span className="sr-only">IITGN</span>
               <img
                 alt="IITGN logo"
                 src="/assets/IITGN_logo.webp"
-                className="h-8 w-auto"
+                className="h-24 w-auto"
               />
             </Link>
             <button
@@ -92,7 +97,11 @@ export default function Header() {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                      location.pathname === item.href
+                        ? "text-white bg-blue-600"
+                        : "text-gray-900 hover:bg-gray-50"
+                    }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
