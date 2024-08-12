@@ -8,11 +8,11 @@ const CaseStudies = () => {
         Case Studies of Smart Energy Management System
       </h2>
 
-      <Card className="overflow-hidden mb-8 mx-auto">
+      <Card className="overflow-hidden mb-8 mx-auto w-3/4">
         <CardContent className="p-0">
           <video
             src="/assets/2nd_tab_big.mp4"
-            className="w-3/4  object-cover mx-auto"
+            className="w-full object-cover"
             autoPlay
             loop
             muted
@@ -20,11 +20,45 @@ const CaseStudies = () => {
         </CardContent>
       </Card>
 
-      <div>
+      <Card className="mb-8 mx-auto w-full">
+        <CardContent className="p-0">
+          <video
+            src="/assets/2nd_tab_(1,1).mp4"
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+          />
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-2 gap-4 mb-8">
+        <Card>
+          <CardContent className="p-0">
+            <img
+              src="/assets/2nd_tab_below_fig.png"
+              alt="Energy management diagram"
+              className="w-full h-full object-cover"
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-0">
+            <img
+              src="/assets/2nd_tab_2_figs.png"
+              alt="Case study visualization"
+              className="w-full h-full object-cover"
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
         <Card>
           <CardContent className="p-0">
             <video
-              src="/assets/2nd_tab_(1,1).mp4"
+              src="/assets/1440_Grid_price.mp4"
               className="w-full h-full object-cover"
               autoPlay
               loop
@@ -33,27 +67,17 @@ const CaseStudies = () => {
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-2">
-          <Card>
-            <CardContent className="p-0">
-              <img
-                src="/assets/2nd_tab_below_fig.png"
-                alt="Energy management diagram"
-                className="w-full h-full object-cover"
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-0">
-              <img
-                src="/assets/2nd_tab_2_figs.png"
-                alt="Case study visualization"
-                className="w-full h-full object-cover"
-              />
-            </CardContent>
-          </Card>
-        </div>
+        <Card>
+          <CardContent className="p-0">
+            <video
+              src="/assets/all_CO2_Emissions.mp4"
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

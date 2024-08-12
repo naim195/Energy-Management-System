@@ -50,12 +50,12 @@ const Home = () => {
               </p>
               {/* Video animation */}
               <div className="my-auto">
-                <h2 className="text-2xl font-bold text-blue-700 mb-2">
+                <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
                   Power Flow Animation
                 </h2>
                 <div className="relative pt-[76.25%] rounded-lg overflow-hidden shadow-xl">
                   <video
-                    src="/assets/power_flow_animation.mp4"
+                    src="/assets/2nd_tab_big.mp4"
                     className="absolute top-0 left-0 w-full h-full"
                     autoPlay
                     loop

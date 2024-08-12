@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import CaseStudies from "./CaseStudies";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const MicrogridForm = () => {
+const UserQuestionnaire = () => {
   const [energySources, setEnergySources] = useState({
     solarPV: false,
     battery: false,
@@ -15,14 +22,44 @@ const MicrogridForm = () => {
   const [criticalLoad, setCriticalLoad] = useState("");
   const [hasNonCriticalLoad, setHasNonCriticalLoad] = useState(null);
   const [nonCriticalLoad, setNonCriticalLoad] = useState("");
+  const [contactDetails, setContactDetails] = useState({
+    email: "",
+    contactNumber: "",
+  });
   const [selectedOption, setSelectedOption] = useState("questionnaire");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleEnergySourceChange = (source) => {
     setEnergySources((prev) => ({ ...prev, [source]: !prev[source] }));
   };
 
+  const handleContactChange = (e) => {
+    const { name, value } = e.target;
+    setContactDetails((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Form validation
+    if (
+      !useDiesel ||
+      !hasCriticalLoad ||
+      (hasCriticalLoad === "Yes" && !criticalLoad) ||
+      !hasNonCriticalLoad ||
+      (hasNonCriticalLoad === "Yes" && !nonCriticalLoad) ||
+      !contactDetails.email ||
+      !contactDetails.contactNumber
+    ) {
+      setAlertMessage("Please fill in all required fields.");
+      setAlertSeverity("error");
+      setOpenSnackbar(true);
+      return;
+    }
+
     const formData = {
       energySources,
       useDiesel,
@@ -30,9 +67,24 @@ const MicrogridForm = () => {
       criticalLoad: hasCriticalLoad === "Yes" ? criticalLoad : null,
       hasNonCriticalLoad,
       nonCriticalLoad: hasNonCriticalLoad === "Yes" ? nonCriticalLoad : null,
+      contactDetails,
     };
     console.log(formData);
-    // handle form submission logic here
+
+    // Show success message
+    setAlertMessage("Form submitted successfully!");
+    setAlertSeverity("success");
+    setOpenSnackbar(true);
+
+    // Replace form with confirmation message
+    setFormSubmitted(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
   };
 
   const fadeInUp = {
@@ -89,160 +141,226 @@ const MicrogridForm = () => {
           </motion.h2>
 
           {selectedOption === "questionnaire" && (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <motion.div {...fadeInUp}>
-                <label className="block font-semibold text-indigo-700 mb-2">
-                  1. What energy sources does your microgrid have?
-                </label>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    "Solar PV",
-                    "Battery",
-                    "Diesel Generator",
-                    "Power Grid",
-                    "Local Loads",
-                  ].map((source) => (
-                    <label
-                      key={source}
-                      className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={
-                          energySources[source.toLowerCase().replace(" ", "")]
-                        }
-                        onChange={() =>
-                          handleEnergySourceChange(
-                            source.toLowerCase().replace(" ", ""),
-                          )
-                        }
-                        className="form-checkbox h-5 w-5 text-indigo-600"
-                      />
-                      <span className="text-gray-700">{source}</span>
+            <>
+              {!formSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <motion.div {...fadeInUp}>
+                    <label className="block font-semibold text-indigo-700 mb-2">
+                      1. What energy sources does your microgrid have?
                     </label>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div {...fadeInUp}>
-                <label className="block font-semibold text-indigo-700 mb-2">
-                  2. Is it ok to use Diesel Generator?
-                </label>
-                <div className="flex space-x-4">
-                  {["Yes", "No"].map((option) => (
-                    <label
-                      key={option}
-                      className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-                    >
-                      <input
-                        type="radio"
-                        value={option}
-                        name="useDiesel"
-                        checked={useDiesel === option}
-                        onChange={() => setUseDiesel(option)}
-                        className="form-radio h-5 w-5 text-indigo-600"
-                      />
-                      <span className="text-gray-700">{option}</span>
-                    </label>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div {...fadeInUp}>
-                <label className="block font-semibold text-indigo-700 mb-2">
-                  3. Is there any critical load in your system?
-                </label>
-                <div className="flex space-x-4 mb-4">
-                  {["Yes", "No"].map((option) => (
-                    <label
-                      key={option}
-                      className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-                    >
-                      <input
-                        type="radio"
-                        value={option}
-                        name="hasCriticalLoad"
-                        checked={hasCriticalLoad === option}
-                        onChange={() => setHasCriticalLoad(option)}
-                        className="form-radio h-5 w-5 text-indigo-600"
-                      />
-                      <span className="text-gray-700">{option}</span>
-                    </label>
-                  ))}
-                </div>
-                {hasCriticalLoad === "Yes" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-4"
-                  >
-                    <label className="block font-medium text-gray-700 mb-2">
-                      Critical load (kW):
-                    </label>
-                    <input
-                      type="number"
-                      value={criticalLoad}
-                      onChange={(e) => setCriticalLoad(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                      placeholder="Enter critical load in kW"
-                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      {[
+                        "Solar PV",
+                        "Battery",
+                        "Diesel Generator",
+                        "Power Grid",
+                        "Local Loads",
+                      ].map((source) => (
+                        <label
+                          key={source}
+                          className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={
+                              energySources[
+                                source.toLowerCase().replace(" ", "")
+                              ]
+                            }
+                            onChange={() =>
+                              handleEnergySourceChange(
+                                source.toLowerCase().replace(" ", ""),
+                              )
+                            }
+                            className="form-checkbox h-5 w-5 text-indigo-600"
+                          />
+                          <span className="text-gray-700">{source}</span>
+                        </label>
+                      ))}
+                    </div>
                   </motion.div>
-                )}
-              </motion.div>
 
-              <motion.div {...fadeInUp}>
-                <label className="block font-semibold text-indigo-700 mb-2">
-                  4. What is non-critical load demand?
-                </label>
-                <div className="flex space-x-4 mb-4">
-                  {["Yes", "No"].map((option) => (
-                    <label
-                      key={option}
-                      className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-                    >
-                      <input
-                        type="radio"
-                        value={option}
-                        name="hasNonCriticalLoad"
-                        checked={hasNonCriticalLoad === option}
-                        onChange={() => setHasNonCriticalLoad(option)}
-                        className="form-radio h-5 w-5 text-indigo-600"
-                      />
-                      <span className="text-gray-700">{option}</span>
+                  <motion.div {...fadeInUp}>
+                    <label className="block font-semibold text-indigo-700 mb-2">
+                      2. Is it ok to use Diesel Generator?
                     </label>
-                  ))}
-                </div>
-                {hasNonCriticalLoad === "Yes" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-4"
-                  >
-                    <label className="block font-medium text-gray-700 mb-2">
-                      Non-critical load (kW):
-                    </label>
-                    <input
-                      type="number"
-                      value={nonCriticalLoad}
-                      onChange={(e) => setNonCriticalLoad(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                      placeholder="Enter non-critical load in kW"
-                    />
+                    <div className="flex space-x-4">
+                      {["Yes", "No"].map((option) => (
+                        <label
+                          key={option}
+                          className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                        >
+                          <input
+                            type="radio"
+                            value={option}
+                            name="useDiesel"
+                            checked={useDiesel === option}
+                            onChange={() => setUseDiesel(option)}
+                            className="form-radio h-5 w-5 text-indigo-600"
+                          />
+                          <span className="text-gray-700">{option}</span>
+                        </label>
+                      ))}
+                    </div>
                   </motion.div>
-                )}
-              </motion.div>
 
-              <motion.button
-                type="submit"
-                className="w-full bg-indigo-600 text-white p-3 rounded-md mt-6 hover:bg-indigo-700 transition-colors duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Submit
-              </motion.button>
-            </form>
+                  <motion.div {...fadeInUp}>
+                    <label className="block font-semibold text-indigo-700 mb-2">
+                      3. Is there any critical load in your system?
+                    </label>
+                    <div className="flex space-x-4 mb-4">
+                      {["Yes", "No"].map((option) => (
+                        <label
+                          key={option}
+                          className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                        >
+                          <input
+                            type="radio"
+                            value={option}
+                            name="hasCriticalLoad"
+                            checked={hasCriticalLoad === option}
+                            onChange={() => setHasCriticalLoad(option)}
+                            className="form-radio h-5 w-5 text-indigo-600"
+                          />
+                          <span className="text-gray-700">{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {hasCriticalLoad === "Yes" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-4"
+                      >
+                        <label className="block font-medium text-gray-700 mb-2">
+                          Critical load (kW):
+                        </label>
+                        <input
+                          type="number"
+                          value={criticalLoad}
+                          onChange={(e) => setCriticalLoad(e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          placeholder="Enter critical load in kW"
+                        />
+                      </motion.div>
+                    )}
+                  </motion.div>
+
+                  <motion.div {...fadeInUp}>
+                    <label className="block font-semibold text-indigo-700 mb-2">
+                      4. Is there any non-critical load in your system?
+                    </label>
+                    <div className="flex space-x-4 mb-4">
+                      {["Yes", "No"].map((option) => (
+                        <label
+                          key={option}
+                          className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                        >
+                          <input
+                            type="radio"
+                            value={option}
+                            name="hasNonCriticalLoad"
+                            checked={hasNonCriticalLoad === option}
+                            onChange={() => setHasNonCriticalLoad(option)}
+                            className="form-radio h-5 w-5 text-indigo-600"
+                          />
+                          <span className="text-gray-700">{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {hasNonCriticalLoad === "Yes" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-4"
+                      >
+                        <label className="block font-medium text-gray-700 mb-2">
+                          Non-critical load (kW):
+                        </label>
+                        <input
+                          type="number"
+                          value={nonCriticalLoad}
+                          onChange={(e) => setNonCriticalLoad(e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          placeholder="Enter non-critical load in kW"
+                        />
+                      </motion.div>
+                    )}
+                  </motion.div>
+
+                  {/* Accordion for Contact Us */}
+                  <motion.div {...fadeInUp}>
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="contact-content"
+                        id="contact-header"
+                      >
+                        <Typography className="font-extrabold text-indigo-700">
+                          Contact Details
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block font-medium text-gray-700 mb-1">
+                              Email:
+                            </label>
+                            <input
+                              type="email"
+                              name="email"
+                              value={contactDetails.email}
+                              onChange={handleContactChange}
+                              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                              placeholder="Enter your email"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block font-medium text-gray-700 mb-1">
+                              Contact Number:
+                            </label>
+                            <input
+                              type="tel"
+                              name="contactNumber"
+                              value={contactDetails.contactNumber}
+                              onChange={handleContactChange}
+                              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                              placeholder="Enter your contact number"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                  </motion.div>
+
+                  <motion.button
+                    type="submit"
+                    className="w-full bg-indigo-600 text-white p-3 rounded-md mt-6 hover:bg-indigo-700 transition-colors duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Submit
+                  </motion.button>
+                </form>
+              ) : (
+                <motion.div
+                  {...fadeInUp}
+                  className="p-6 bg-white rounded-lg shadow-md"
+                >
+                  <h3 className="text-xl font-semibold text-indigo-700 mb-4">
+                    Thank you!
+                  </h3>
+                  <p className="text-gray-700">
+                    We have received your configuration request. We will get
+                    back to you shortly with the details.
+                  </p>
+                </motion.div>
+              )}
+            </>
           )}
 
           {selectedOption === "caseStudies" && (
@@ -256,8 +374,24 @@ const MicrogridForm = () => {
           )}
         </div>
       </div>
+
+      {/* Snackbar Alert */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={alertSeverity}
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
 
-export default MicrogridForm;
+export default UserQuestionnaire;
