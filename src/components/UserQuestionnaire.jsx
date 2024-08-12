@@ -31,6 +31,7 @@ const UserQuestionnaire = () => {
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const handleEnergySourceChange = (source) => {
     setEnergySources((prev) => ({ ...prev, [source]: !prev[source] }));
@@ -87,6 +88,10 @@ const UserQuestionnaire = () => {
     setOpenSnackbar(false);
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
+  };
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -94,43 +99,52 @@ const UserQuestionnaire = () => {
   };
 
   return (
-    <div className="max-w mx-auto mt-10 p-6 bg-gradient-to-br from-blue-50 to-indigo-100 shadow-lg rounded-lg">
+    <div className="max-w mx-auto mt-10 p-6 bg-gradient-to-br from-blue-50 to-indigo-100 shadow-lg rounded-lg relative">
+      <button
+        onClick={toggleSidebar}
+        className="absolute top-4 left-4 z-10 p-2 bg-indigo-600 text-white rounded-md shadow-md hover:bg-indigo-700"
+      >
+        {sidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+      </button>
+
       <div className="flex">
         {/* Left Section - Sidebar */}
-        <div className="w-1/4 pr-6 border-r border-blue-200">
-          <h3 className="text-xl font-semibold mb-4 text-indigo-700">
-            Options
-          </h3>
-          <ul className="space-y-2">
-            <li>
-              <button
-                className={`w-full text-left p-2 rounded transition-all duration-300 ${
-                  selectedOption === "questionnaire"
-                    ? "bg-indigo-500 text-white"
-                    : "hover:bg-indigo-100 text-indigo-600"
-                }`}
-                onClick={() => setSelectedOption("questionnaire")}
-              >
-                Questionnaire
-              </button>
-            </li>
-            <li>
-              <button
-                className={`w-full text-left p-2 rounded transition-all duration-300 ${
-                  selectedOption === "caseStudies"
-                    ? "bg-indigo-500 text-white"
-                    : "hover:bg-indigo-100 text-indigo-600"
-                }`}
-                onClick={() => setSelectedOption("caseStudies")}
-              >
-                Case Studies
-              </button>
-            </li>
-          </ul>
-        </div>
+        {sidebarOpen && (
+          <div className="w-1/4 pr-6 border-r border-blue-200">
+            <h3 className="text-xl font-semibold mb-4 text-indigo-700">
+              Options
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <button
+                  className={`w-full text-left p-2 rounded transition-all duration-300 ${
+                    selectedOption === "questionnaire"
+                      ? "bg-indigo-500 text-white"
+                      : "hover:bg-indigo-100 text-indigo-600"
+                  }`}
+                  onClick={() => setSelectedOption("questionnaire")}
+                >
+                  Questionnaire
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`w-full text-left p-2 rounded transition-all duration-300 ${
+                    selectedOption === "caseStudies"
+                      ? "bg-indigo-500 text-white"
+                      : "hover:bg-indigo-100 text-indigo-600"
+                  }`}
+                  onClick={() => setSelectedOption("caseStudies")}
+                >
+                  Case Studies
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
 
         {/* Right Section - Main Content */}
-        <div className="w-3/4 pl-6">
+        <div className={`w-${sidebarOpen ? "3/4" : "full"} pl-6`}>
           <motion.h2
             className="text-3xl font-bold mb-6 text-center text-indigo-800"
             initial={{ opacity: 0, y: -20 }}
