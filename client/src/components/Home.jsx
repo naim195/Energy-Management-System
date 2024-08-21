@@ -32,9 +32,9 @@ const Home = () => {
               Energy Management System (EMS)
             </h1>
 
-            <div className="grid grid-cols-2 gap-20">
+            <div className="grid grid-cols-2 gap-20 items-center">
               {/* Main paragraph */}
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed text-center my-auto">
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed text-center">
                 This animation demonstrates the flow of power in an Energy
                 Management System (EMS). All the components in the EMS are
                 connected to the EMS device, which decides the power flow from
