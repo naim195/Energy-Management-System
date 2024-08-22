@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import Card from "./ui/Card";
-import CardContent from "./ui/CardContent";
 import {
   ArrowBigDown,
   ArrowBigUp,
@@ -26,8 +24,8 @@ const Home = () => {
       <div
         className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >
-        <Card className="max-w w-full bg-white rounded-xl shadow-2xl ">
-          <CardContent className="p-8">
+        <div className="card w-full max-w-full bg-white shadow-xl rounded-xl">
+          <div className="card-body">
             <h1 className="text-5xl font-extrabold text-blue-800 mb-8 text-center">
               Energy Management System (EMS)
             </h1>
@@ -49,14 +47,14 @@ const Home = () => {
                 grid and making a profit.
               </p>
               {/* Video animation */}
-              <div className="my-auto">
+              <div className="flex flex-col align-center">
                 <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
                   Power Flow Animation
                 </h2>
-                <div className="relative pt-[76.25%] rounded-lg overflow-hidden shadow-xl">
+                <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl">
                   <video
                     src="/assets/2nd_tab_big.mp4"
-                    className="absolute top-0 left-0 w-full h-full"
+                    className="object-cover w-full h-full absolute top-0 left-0 right-0 bottom-0"
                     autoPlay
                     loop
                     muted
@@ -67,7 +65,7 @@ const Home = () => {
 
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-1">
-                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner">
+                <div className="card bg-blue-50 p-6 rounded-xl shadow-inner">
                   <h2 className="text-2xl font-bold text-blue-700 mb-4">
                     Key Features:
                   </h2>
@@ -81,10 +79,10 @@ const Home = () => {
                       />
                     ))}
                   </ul>
-                </Card>
+                </div>
               </div>
               <div className="flex-1 m-auto">
-                <Card className="bg-blue-50 p-6 rounded-xl shadow-inner">
+                <div className="card bg-blue-50 p-6 rounded-xl shadow-inner">
                   <h3 className="text-xl font-semibold text-blue-800 mb-4">
                     Power Flow Dynamics
                   </h3>
@@ -97,7 +95,7 @@ const Home = () => {
                       />
                     ))}
                   </ul>
-                </Card>
+                </div>
               </div>
             </div>
 
@@ -124,8 +122,8 @@ const Home = () => {
                 <span>High Cost</span>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
