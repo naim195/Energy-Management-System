@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AppliancesTable = ({ applianceName, defaultValues }) => {
+const AppliancesTable = ({
+  applianceName,
+  defaultValues,
+  setApplianceNamesEnergyCost,
+}) => {
   const [lowPower, setLowPower] = useState(defaultValues[0] || 0);
   const [mediumPower, setMediumPower] = useState(defaultValues[1] || 0);
   const [highPower, setHighPower] = useState(defaultValues[2] || 0);
@@ -21,6 +25,34 @@ const AppliancesTable = ({ applianceName, defaultValues }) => {
   const calculateTotalEnergy = (powerRating, used, hours) => {
     return powerRating * used * hours;
   };
+
+  useEffect(() => {
+    const newEnergyConsumption = {
+      low: calculateTotalEnergy(lowPower, lowUsed, lowHours),
+      medium: calculateTotalEnergy(mediumPower, mediumUsed, mediumHours),
+      high: calculateTotalEnergy(highPower, highUsed, highHours),
+      other: calculateTotalEnergy(otherPower, otherUsed, otherHours),
+    };
+    setApplianceNamesEnergyCost((prevState) => ({
+      ...prevState,
+      [applianceName]: newEnergyConsumption,
+    }));
+  }, [
+    lowPower,
+    mediumPower,
+    highPower,
+    otherPower,
+    lowUsed,
+    mediumUsed,
+    highUsed,
+    otherUsed,
+    lowHours,
+    mediumHours,
+    highHours,
+    otherHours,
+    setApplianceNamesEnergyCost,
+    applianceName,
+  ]);
 
   return (
     <div>
@@ -192,7 +224,7 @@ const AppliancesTable = ({ applianceName, defaultValues }) => {
 AppliancesTable.propTypes = {
   applianceName: PropTypes.string.isRequired,
   defaultValues: PropTypes.array.isRequired,
-  setTotalEnergyConsumption: PropTypes.func.isRequired, // Ensure that this function is passed from the parent
+  setApplianceNamesEnergyCost: PropTypes.func.isRequired, // Ensure that this function is passed from the parent
 };
 
 export default AppliancesTable;

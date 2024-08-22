@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const Miscellaneous = () => {
+const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
   const [inputValue, setInputValue] = useState("");
   const [miscellaneousItems, setMiscellaneousItems] = useState([]);
 
@@ -30,6 +31,29 @@ const Miscellaneous = () => {
   const calculateTotalEnergy = (power, used, hours) => {
     return power * used * hours;
   };
+
+  // Calculate total energy consumption for all miscellaneous items
+  const calculateTotalMiscEnergy = () => {
+    return miscellaneousItems.reduce(
+      (totals, item) => {
+        Object.keys(totals).forEach((key) => {
+          totals[key] += calculateTotalEnergy(
+            item.power[key],
+            item.used[key],
+            item.hours[key],
+          );
+        });
+        return totals;
+      },
+      { low: 0, medium: 0, high: 0, other: 0 },
+    );
+  };
+
+  useEffect(() => {
+    // Calculate and set total energy consumption when miscellaneousItems change
+    const totalMiscEnergyConsumption = calculateTotalMiscEnergy();
+    setTotalMiscEnergyConsumption(totalMiscEnergyConsumption);
+  }, [miscellaneousItems, setTotalMiscEnergyConsumption]);
 
   return (
     <div>
@@ -332,7 +356,6 @@ const Miscellaneous = () => {
 
 export default Miscellaneous;
 
-// Miscellaneous.propTypes = {
-
-//     setTotalEnergyConsumption: PropTypes.func.isRequired, // Ensure that this function is passed from the parent
-//   };
+Miscellaneous.propTypes = {
+  setTotalMiscEnergyConsumption: PropTypes.func.isRequired, // Ensure that this function is passed from the parent
+};

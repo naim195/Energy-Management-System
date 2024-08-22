@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AppliancesTable from "./AppliancesTable";
 import Miscellanous from "./Miscellanous";
 
@@ -62,18 +63,66 @@ const IndividualHouse = () => {
     "Water Pump": [1000, 1500, 2000],
   };
 
-  //   const [totalEnergyConsumption, setTotalEnergyConsumption] = useState({
-  //     low: 0,
-  //     medium: 0,
-  //     high: 0,
-  //     other: 0,
-  //   });
+  const [applianceNamesEnergyCost, setApplianceNamesEnergyCost] = useState({
+    "LED bulbs": { low: 0, medium: 0, high: 0, other: 0 },
+    "LED Tubes": { low: 0, medium: 0, high: 0, other: 0 },
+    "Celling Fans": { low: 0, medium: 0, high: 0, other: 0 },
+    "Movable Fans": { low: 0, medium: 0, high: 0, other: 0 },
+    Lamps: { low: 0, medium: 0, high: 0, other: 0 },
+    "Computer/Laptops": { low: 0, medium: 0, high: 0, other: 0 },
+    Televisions: { low: 0, medium: 0, high: 0, other: 0 },
+    "Audio Outputs": { low: 0, medium: 0, high: 0, other: 0 },
+    "Air Purifiers": { low: 0, medium: 0, high: 0, other: 0 },
+    "Air cooler": { low: 0, medium: 0, high: 0, other: 0 },
+    "Air Conditioners": { low: 0, medium: 0, high: 0, other: 0 },
+    Iron: { low: 0, medium: 0, high: 0, other: 0 },
+    "Hair Dryer": { low: 0, medium: 0, high: 0, other: 0 },
+    "Vacuum Cleaner": { low: 0, medium: 0, high: 0, other: 0 },
+    Refrigerator: { low: 0, medium: 0, high: 0, other: 0 },
+    "Blender/ Mixers": { low: 0, medium: 0, high: 0, other: 0 },
+    "Water Purifiers": { low: 0, medium: 0, high: 0, other: 0 },
+    "Electric Kettle": { low: 0, medium: 0, high: 0, other: 0 },
+    "Induction Cooker": { low: 0, medium: 0, high: 0, other: 0 },
+    Toaster: { low: 0, medium: 0, high: 0, other: 0 },
+    "Microwave Oven": { low: 0, medium: 0, high: 0, other: 0 },
+    "Dish Washer": { low: 0, medium: 0, high: 0, other: 0 },
+    "Washing Machines": { low: 0, medium: 0, high: 0, other: 0 },
+    Dryers: { low: 0, medium: 0, high: 0, other: 0 },
+    "Water Heater (Geyser)": { low: 0, medium: 0, high: 0, other: 0 },
+    "Room Heater": { low: 0, medium: 0, high: 0, other: 0 },
+    "Water Pump": { low: 0, medium: 0, high: 0, other: 0 },
+  });
 
-  //   // Function to calculate the total energy consumption
-  //   const calculateTotal = () => {
-  //     const { low, medium, high, other } = totalEnergyConsumption;
-  //     return low + medium + high + other;
-  //   };
+  const [totalMiscEnergyConsumption, setTotalMiscEnergyConsumption] = useState({
+    low: 0,
+    medium: 0,
+    high: 0,
+    other: 0,
+  });
+
+  const calculateTotalApplianceEnergy = () => {
+    return Object.values(applianceNamesEnergyCost).reduce(
+      (totals, costs) => {
+        Object.keys(totals).forEach((key) => {
+          totals[key] += costs[key];
+        });
+        return totals;
+      },
+      { low: 0, medium: 0, high: 0, other: 0 },
+    );
+  };
+
+  // Total energy consumption combining appliances and miscellaneous items
+  const totalEnergyConsumption = {
+    low: calculateTotalApplianceEnergy().low + totalMiscEnergyConsumption.low,
+    medium:
+      calculateTotalApplianceEnergy().medium +
+      totalMiscEnergyConsumption.medium,
+    high:
+      calculateTotalApplianceEnergy().high + totalMiscEnergyConsumption.high,
+    other:
+      calculateTotalApplianceEnergy().other + totalMiscEnergyConsumption.other,
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -166,6 +215,7 @@ const IndividualHouse = () => {
             <AppliancesTable
               applianceName={name}
               defaultValues={defaultValues[name] || [0, 0, 0]}
+              setApplianceNamesEnergyCost={setApplianceNamesEnergyCost}
             />
             <div className="divider"></div>
           </div>
@@ -175,20 +225,27 @@ const IndividualHouse = () => {
       {/* Section for Miscellaneous Items */}
       <div className="card bg-base-100 shadow-xl p-6">
         <p>Add miscellaneous items</p>
-        <Miscellanous />
+        <Miscellanous
+          setTotalMiscEnergyConsumption={setTotalMiscEnergyConsumption}
+        />
       </div>
 
       {/* Display Total Energy Consumption */}
-      {/* <div className="card bg-base-100 shadow-xl p-6">
+      <div className="card bg-base-100 shadow-xl p-6">
         <h3 className="text-lg font-semibold">Total Energy Consumption</h3>
-        <div className="mt-4">
-          <p>Low: {totalEnergyConsumption.low} Wh</p>
-          <p>Medium: {totalEnergyConsumption.medium} Wh</p>
-          <p>High: {totalEnergyConsumption.high} Wh</p>
-          <p>Other: {totalEnergyConsumption.other} Wh</p>
-          <p className="font-bold">Total: {calculateTotal()} Wh</p>
-        </div>
-      </div> */}
+        <p>Low: {totalEnergyConsumption.low} Wh</p>
+        <p>Medium: {totalEnergyConsumption.medium} Wh</p>
+        <p>High: {totalEnergyConsumption.high} Wh</p>
+        <p>Other: {totalEnergyConsumption.other} Wh</p>
+        <p>
+          Total Energy Consumption:{" "}
+          {Object.values(totalEnergyConsumption).reduce(
+            (acc, curr) => acc + curr,
+            0,
+          )}{" "}
+          Wh
+        </p>
+      </div>
 
       {/* Submit Button */}
       <div className="flex justify-center">
