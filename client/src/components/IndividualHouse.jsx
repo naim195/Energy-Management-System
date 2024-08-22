@@ -100,6 +100,9 @@ const IndividualHouse = () => {
     other: 0,
   });
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
   const calculateTotalApplianceEnergy = () => {
     return Object.values(applianceNamesEnergyCost).reduce(
       (totals, costs) => {
@@ -123,6 +126,10 @@ const IndividualHouse = () => {
     other:
       calculateTotalApplianceEnergy().other + totalMiscEnergyConsumption.other,
   };
+    
+    const handleSubmit = () => {
+        
+    }
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -245,6 +252,35 @@ const IndividualHouse = () => {
           )}{" "}
           Wh
         </p>
+      </div>
+
+      <div className="card bg-base-100 shadow-xl p-6">
+        <div>
+          <label className="block text-sm font-medium mb-2" htmlFor="name">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2" htmlFor="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
       </div>
 
       {/* Submit Button */}

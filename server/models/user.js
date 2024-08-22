@@ -38,20 +38,90 @@ const appliancesSchema = new Schema({
     type: [
       {
         name: String,
-        quantity: {
-          type: Number,
-          default: 0,
-        },
-        numberOfHoursUsed: {
-          type: Number,
-          default: 0,
+        power: {
+          low: {
+            rating: {
+              type: Number,
+              default: 0,
+            },
+            quantity: {
+              type: Number,
+              default: 0,
+            },
+            numberOfHoursUsed: {
+              type: Number,
+              default: 0,
+            }
+          },
+          medium: {
+            rating: {
+              type: Number,
+              default: 0,
+            },
+            quantity: {
+              type: Number,
+              default: 0,
+            },
+            numberOfHoursUsed: {
+              type: Number,
+              default: 0,
+            }
+          },
+          high: {
+            rating: {
+              type: Number,
+              default: 0,
+            },
+            quantity: {
+              type: Number,
+              default: 0,
+            },
+            numberOfHoursUsed: {
+              type: Number,
+              default: 0,
+            }
+          },
+          other: {
+            rating: {
+              type: Number,
+              default: 0,
+            },
+            quantity: {
+              type: Number,
+              default: 0,
+            },
+            numberOfHoursUsed: {
+              type: Number,
+              default: 0,
+            }
+          }
         },
       },
     ],
     default: applianceNames.map((name) => ({
       name,
-      quantity: 0,
-      numberOfHoursUsed: 0,
+      power: {
+        low: {
+          rating: 0,
+          quantity: 0,
+          numberOfHoursUsed: 0,
+        },
+        medium: {
+          rating: 0,
+          quantity: 0,
+          numberOfHoursUsed: 0,
+        },
+        high: {
+          rating: 0,
+          quantity: 0,
+          numberOfHoursUsed: 0,
+        },
+        other: {
+          rating: 0,
+          quantity: 0,
+          numberOfHoursUsed: 0,
+        }
+      }
     })), // Predefine appliances
   },
 });
