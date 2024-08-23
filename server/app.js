@@ -19,13 +19,7 @@ mongoose
     console.error("Failed to connect to MongoDB", err);
   });
 
-app.use(
-  cors({
-    origin: "https://smart-ems.vercel.app/",
-    credentials: true,
-  }),
-);
-
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -35,7 +29,7 @@ app.get("/", (req, res) => {
 // POST route to handle form submission
 app.post("/submit", async (req, res) => {
   try {
-    const { name, email, appliances, misc, totalEnergyConsumption } = req.body;
+    const { name, email, appliances, misc } = req.body;
 
     const newUser = new User({
       name,

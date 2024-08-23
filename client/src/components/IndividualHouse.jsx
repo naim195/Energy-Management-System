@@ -137,6 +137,8 @@ const IndividualHouse = () => {
       misc: miscellaneousItems,
     };
 
+    console.log(payload);
+
     try {
       const response = await axios.post(`${backendUrl}/submit`, payload);
       if (response.status === 201) {
