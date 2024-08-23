@@ -35,8 +35,7 @@ app.post("/submit", async (req, res) => {
       name,
       email,
       appliances,
-      misc,
-      totalEnergyConsumption,
+      misc,      
     });
 
     await newUser.save();
