@@ -52,9 +52,9 @@ const userSchema = new mongoose.Schema({
     },
   ],
   choices: {
-    energySource: { type: String, required: true }, 
-    dieselUse: { type: String, required: true },
-    energyGoal: { type: String, required: true }, 
+    energySource: String, 
+    dieselUse: String,
+    energyGoal: String, 
   },
 });
 

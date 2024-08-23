@@ -65,11 +65,11 @@ const Miscellaneous = ({ miscellaneousItems, setMiscellaneousItems }) => {
       <div className="mb-4">
         {/* Input field for 'Miscellaneous' */}
         <div className="flex flex-col items-center">
-          <label className="flex items-center gap-2 mb-2 w-full">
+          <label className="flex items-center gap-2 mb-2 w-full input input-bordered flex items-center gap-2">
             <span className="mr-2">Enter Appliance Name:</span>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="grow"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />

@@ -5,7 +5,7 @@ const UserQuestionnaire = () => {
   const [activeSection, setActiveSection] = useState("Individual House");
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-gradient-to-b from-blue-200 to-green-200">
       <div className="flex justify-center mb-6">
         <button
           className={`mx-2 px-4 py-2 rounded-lg ${
