@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
       medium: {
         rating: Number,
         number: Number,
-        hoursUsed: Number, 
+        hoursUsed: Number,
         total: Number,
       },
       high: {
@@ -52,9 +52,9 @@ const userSchema = new mongoose.Schema({
     },
   ],
   choices: {
-    energySource: String, 
+    energySource: String,
     dieselUse: String,
-    energyGoal: String, 
+    energyGoal: String,
   },
 });
 

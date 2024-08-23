@@ -31,7 +31,6 @@ app.post("/submit", async (req, res) => {
   try {
     const { name, email, appliances, misc, choices } = req.body;
 
-    
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -50,18 +49,19 @@ app.post("/submit", async (req, res) => {
         email,
         appliances,
         misc,
-        choices, 
+        choices,
       });
 
       await newUser.save();
-      res.status(201).json({ message: "New user created and data submitted successfully!" });
+      res
+        .status(201)
+        .json({ message: "New user created and data submitted successfully!" });
     }
   } catch (error) {
     console.error("Error saving data", error);
     res.status(500).json({ message: "Failed to submit data" });
   }
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

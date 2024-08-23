@@ -183,8 +183,9 @@ const IndividualHouse = () => {
                     <label key={source} className="flex items-center">
                       <input
                         type="radio"
-                        name="energySources"
+                        name="energySource" // Changed from "energySources"
                         className="radio radio-primary mr-3"
+                        value={source} // Add value for the radio button
                         onChange={handleChoiceChange}
                       />
                       <span>{source}</span>
@@ -209,6 +210,7 @@ const IndividualHouse = () => {
                       type="radio"
                       name="dieselUse"
                       className="radio radio-primary mr-3"
+                      value={option} // Add value for the radio button
                       onChange={handleChoiceChange}
                     />
                     <span>{option}</span>
@@ -230,6 +232,7 @@ const IndividualHouse = () => {
                     type="radio"
                     name="energyGoal"
                     className="radio radio-primary mr-3"
+                    value="Make profit by selling electricity to the grid" // Add value for the radio button
                     onChange={handleChoiceChange}
                   />
                   <span>Make profit by selling electricity to the grid</span>
@@ -239,6 +242,7 @@ const IndividualHouse = () => {
                     type="radio"
                     name="energyGoal"
                     className="radio radio-primary mr-3"
+                    value="Be self-sustainable in energy generation and consumption" // Add value for the radio button
                     onChange={handleChoiceChange}
                   />
                   <span>

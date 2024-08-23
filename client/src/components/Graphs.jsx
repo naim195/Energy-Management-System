@@ -86,7 +86,10 @@ const Graphs = () => {
         </div>
       </div>
 
-      
+      <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+        <h2>Carbon Emission Comparison</h2>
+        <video src="/assets/1440_Grid_price.mp4" autoPlay loop />
+      </div>
     </div>
   );
 };
