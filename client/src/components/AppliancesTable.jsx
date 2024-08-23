@@ -28,30 +28,41 @@ const AppliancesTable = ({
 
   useEffect(() => {
     const newEnergyConsumption = {
-      low: calculateTotalEnergy(lowPower, lowUsed, lowHours),
-      medium: calculateTotalEnergy(mediumPower, mediumUsed, mediumHours),
-      high: calculateTotalEnergy(highPower, highUsed, highHours),
-      other: calculateTotalEnergy(otherPower, otherUsed, otherHours),
+      low: {
+        rating: lowPower,
+        number: lowUsed,
+        hoursUsed: lowHours,
+        total: calculateTotalEnergy(lowPower, lowUsed, lowHours),
+      },
+      medium: {
+        rating: mediumPower,
+        number: mediumUsed,
+        hoursUsed: mediumHours,
+        total: calculateTotalEnergy(mediumPower, mediumUsed, mediumHours),
+      },
+      high: {
+        rating: highPower,
+        number: highUsed,
+        hoursUsed: highHours,
+        total: calculateTotalEnergy(highPower, highUsed, highHours),
+      },
+      other: {
+        rating: otherPower,
+        number: otherUsed,
+        hoursUsed: otherHours,
+        total: calculateTotalEnergy(otherPower, otherUsed, otherHours),
+      },
     };
+  
     setApplianceNamesEnergyCost((prevState) => ({
       ...prevState,
       [applianceName]: newEnergyConsumption,
     }));
   }, [
-    lowPower,
-    mediumPower,
-    highPower,
-    otherPower,
-    lowUsed,
-    mediumUsed,
-    highUsed,
-    otherUsed,
-    lowHours,
-    mediumHours,
-    highHours,
-    otherHours,
-    setApplianceNamesEnergyCost,
-    applianceName,
+    lowPower, mediumPower, highPower, otherPower,
+    lowUsed, mediumUsed, highUsed, otherUsed,
+    lowHours, mediumHours, highHours, otherHours,
+    setApplianceNamesEnergyCost, applianceName,
   ]);
 
   return (

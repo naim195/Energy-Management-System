@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import AppliancesTable from "./AppliancesTable";
 import Miscellanous from "./Miscellanous";
+// import axios from "axios";
 
 const IndividualHouse = () => {
   const applianceNames = [
@@ -63,73 +64,68 @@ const IndividualHouse = () => {
     "Water Pump": [1000, 1500, 2000],
   };
 
-  const [applianceNamesEnergyCost, setApplianceNamesEnergyCost] = useState({
-    "LED bulbs": { low: 0, medium: 0, high: 0, other: 0 },
-    "LED Tubes": { low: 0, medium: 0, high: 0, other: 0 },
-    "Celling Fans": { low: 0, medium: 0, high: 0, other: 0 },
-    "Movable Fans": { low: 0, medium: 0, high: 0, other: 0 },
-    Lamps: { low: 0, medium: 0, high: 0, other: 0 },
-    "Computer/Laptops": { low: 0, medium: 0, high: 0, other: 0 },
-    Televisions: { low: 0, medium: 0, high: 0, other: 0 },
-    "Audio Outputs": { low: 0, medium: 0, high: 0, other: 0 },
-    "Air Purifiers": { low: 0, medium: 0, high: 0, other: 0 },
-    "Air cooler": { low: 0, medium: 0, high: 0, other: 0 },
-    "Air Conditioners": { low: 0, medium: 0, high: 0, other: 0 },
-    Iron: { low: 0, medium: 0, high: 0, other: 0 },
-    "Hair Dryer": { low: 0, medium: 0, high: 0, other: 0 },
-    "Vacuum Cleaner": { low: 0, medium: 0, high: 0, other: 0 },
-    Refrigerator: { low: 0, medium: 0, high: 0, other: 0 },
-    "Blender/ Mixers": { low: 0, medium: 0, high: 0, other: 0 },
-    "Water Purifiers": { low: 0, medium: 0, high: 0, other: 0 },
-    "Electric Kettle": { low: 0, medium: 0, high: 0, other: 0 },
-    "Induction Cooker": { low: 0, medium: 0, high: 0, other: 0 },
-    Toaster: { low: 0, medium: 0, high: 0, other: 0 },
-    "Microwave Oven": { low: 0, medium: 0, high: 0, other: 0 },
-    "Dish Washer": { low: 0, medium: 0, high: 0, other: 0 },
-    "Washing Machines": { low: 0, medium: 0, high: 0, other: 0 },
-    Dryers: { low: 0, medium: 0, high: 0, other: 0 },
-    "Water Heater (Geyser)": { low: 0, medium: 0, high: 0, other: 0 },
-    "Room Heater": { low: 0, medium: 0, high: 0, other: 0 },
-    "Water Pump": { low: 0, medium: 0, high: 0, other: 0 },
-  });
+  const initialObject = applianceNames.reduce((acc, name) => {
+    acc[name] = {
+      low: {
+        rating: 0,
+        number: 0,
+        hoursUsed: 0,
+        total: 0,
+      },
+      medium: {
+        rating: 0,
+        number: 0,
+        hoursUsed: 0,
+        total: 0,
+      },
+      high: {
+        rating: 0,
+        number: 0,
+        hoursUsed: 0,
+        total: 0,
+      },
+      other: {
+        rating: 0,
+        number: 0,
+        hoursUsed: 0,
+        total: 0,
+      },
+    };
+    return acc;
+  }, {});
+  
 
-  const [totalMiscEnergyConsumption, setTotalMiscEnergyConsumption] = useState({
-    low: 0,
-    medium: 0,
-    high: 0,
-    other: 0,
-  });
+  const [applianceNamesEnergyCost, setApplianceNamesEnergyCost] = useState(initialObject);
+  const [miscellaneousItems, setMiscellaneousItems] = useState([]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const calculateTotalApplianceEnergy = () => {
-    return Object.values(applianceNamesEnergyCost).reduce(
-      (totals, costs) => {
-        Object.keys(totals).forEach((key) => {
-          totals[key] += costs[key];
-        });
-        return totals;
-      },
-      { low: 0, medium: 0, high: 0, other: 0 },
-    );
-  };
 
-  // Total energy consumption combining appliances and miscellaneous items
-  const totalEnergyConsumption = {
-    low: calculateTotalApplianceEnergy().low + totalMiscEnergyConsumption.low,
-    medium:
-      calculateTotalApplianceEnergy().medium +
-      totalMiscEnergyConsumption.medium,
-    high:
-      calculateTotalApplianceEnergy().high + totalMiscEnergyConsumption.high,
-    other:
-      calculateTotalApplianceEnergy().other + totalMiscEnergyConsumption.other,
-  };
-    
-    const handleSubmit = () => {
-        
-    }
+  const calculateTotalEnergyConsumption = useCallback(() => {
+    const total = { low: 0, medium: 0, high: 0, other: 0 };
+  
+    // Sum up appliances
+    Object.values(applianceNamesEnergyCost).forEach((appliance) => {
+      ['low', 'medium', 'high', 'other'].forEach((category) => {
+        total[category] += appliance[category].total;
+      });
+    });
+  
+    // Sum up miscellaneous items
+    miscellaneousItems.forEach((item) => {
+      ['low', 'medium', 'high', 'other'].forEach((category) => {
+        total[category] += item[category].total;
+      });
+    });
+  
+    return total;
+  }, [applianceNamesEnergyCost, miscellaneousItems]);
+  
+  
+  const totalEnergyConsumption = useMemo(() => calculateTotalEnergyConsumption(), [calculateTotalEnergyConsumption]);
+
+  
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -233,24 +229,21 @@ const IndividualHouse = () => {
       <div className="card bg-base-100 shadow-xl p-6">
         <p>Add miscellaneous items</p>
         <Miscellanous
-          setTotalMiscEnergyConsumption={setTotalMiscEnergyConsumption}
+          miscellaneousItems={miscellaneousItems } setMiscellaneousItems={setMiscellaneousItems}
         />
       </div>
 
       {/* Display Total Energy Consumption */}
       <div className="card bg-base-100 shadow-xl p-6">
         <h3 className="text-lg font-semibold">Total Energy Consumption</h3>
-        <p>Low: {totalEnergyConsumption.low} Wh</p>
-        <p>Medium: {totalEnergyConsumption.medium} Wh</p>
-        <p>High: {totalEnergyConsumption.high} Wh</p>
-        <p>Other: {totalEnergyConsumption.other} Wh</p>
-        <p>
-          Total Energy Consumption:{" "}
-          {Object.values(totalEnergyConsumption).reduce(
-            (acc, curr) => acc + curr,
-            0,
-          )}{" "}
-          Wh
+        <p>Low: {totalEnergyConsumption.low.toFixed(2)} Wh</p>
+        <p>Medium: {totalEnergyConsumption.medium.toFixed(2)} Wh</p>
+        <p>High: {totalEnergyConsumption.high.toFixed(2)} Wh</p>
+        <p>Other: {totalEnergyConsumption.other.toFixed(2)} Wh</p>
+        <p className="font-bold mt-2">
+          Total Energy Consumption: {
+            Object.values(totalEnergyConsumption).reduce((acc, curr) => acc + curr, 0).toFixed(2)
+          } Wh
         </p>
       </div>
 

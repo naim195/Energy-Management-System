@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
+const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
   const [inputValue, setInputValue] = useState("");
-  const [miscellaneousItems, setMiscellaneousItems] = useState([]);
 
   // Handle the addition of a new miscellaneous item
   const addMiscellaneousItem = () => {
@@ -12,48 +11,58 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
       ...miscellaneousItems,
       {
         name: inputValue,
-        power: { low: 0, medium: 0, high: 0, other: 0 },
-        used: { low: 0, medium: 0, high: 0, other: 0 },
-        hours: { low: 0, medium: 0, high: 0, other: 0 },
+        low: {
+          rating: 0,
+          number: 0,
+          hoursUsed: 0,
+          total: 0,
+        },
+        medium: {
+          rating: 0,
+          number: 0,
+          hoursUsed: 0,
+          total: 0,
+        },
+        high: {
+          rating: 0,
+          number: 0,
+          hoursUsed: 0,
+          total: 0,
+        },
+        other: {
+          rating: 0,
+          number: 0,
+          hoursUsed: 0,
+          total: 0,
+        },
       },
     ]);
     setInputValue(""); // Clear the input field after adding
+  };
+
+  // Calculate total energy for a category
+  const calculateTotalEnergy = (rating, number, hoursUsed) => {
+    return rating * number * hoursUsed;
   };
 
   // Update the power, used, or hours state for a specific item
   const updateItem = (index, category, type, value) => {
     const newItems = [...miscellaneousItems];
     newItems[index][category][type] = value;
+
+    // Update the total energy for this category
+    newItems[index][category].total = calculateTotalEnergy(
+      newItems[index][category].rating,
+      newItems[index][category].number,
+      newItems[index][category].hoursUsed,
+    );
+
     setMiscellaneousItems(newItems);
   };
 
-  // Calculate total energy for a category across all items
-  const calculateTotalEnergy = (power, used, hours) => {
-    return power * used * hours;
-  };
+  
 
-  // Calculate total energy consumption for all miscellaneous items
-  const calculateTotalMiscEnergy = () => {
-    return miscellaneousItems.reduce(
-      (totals, item) => {
-        Object.keys(totals).forEach((key) => {
-          totals[key] += calculateTotalEnergy(
-            item.power[key],
-            item.used[key],
-            item.hours[key],
-          );
-        });
-        return totals;
-      },
-      { low: 0, medium: 0, high: 0, other: 0 },
-    );
-  };
-
-  useEffect(() => {
-    // Calculate and set total energy consumption when miscellaneousItems change
-    const totalMiscEnergyConsumption = calculateTotalMiscEnergy();
-    setTotalMiscEnergyConsumption(totalMiscEnergyConsumption);
-  }, [miscellaneousItems, setTotalMiscEnergyConsumption]);
+ 
 
   return (
     <div>
@@ -101,12 +110,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                           type="number"
                           className="input input-bordered w-full"
                           min={0}
-                          value={item.power.low}
+                          value={item.low.rating}
                           onChange={(e) =>
                             updateItem(
                               index,
-                              "power",
                               "low",
+                              "rating",
                               Number(e.target.value),
                             )
                           }
@@ -120,12 +129,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                           type="number"
                           className="input input-bordered w-full"
                           min={0}
-                          value={item.power.medium}
+                          value={item.medium.rating}
                           onChange={(e) =>
                             updateItem(
                               index,
-                              "power",
                               "medium",
+                              "rating",
                               Number(e.target.value),
                             )
                           }
@@ -137,14 +146,14 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                       <div className="flex items-center">
                         <input
                           type="number"
-                          className="input input-bordered w-full"
+                          className="input input-bordered w-full"                          
                           min={0}
-                          value={item.power.high}
+                          value={item.high.rating}
                           onChange={(e) =>
                             updateItem(
                               index,
-                              "power",
                               "high",
+                              "rating",
                               Number(e.target.value),
                             )
                           }
@@ -158,12 +167,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                           type="number"
                           className="input input-bordered w-full"
                           min={0}
-                          value={item.power.other}
+                          value={item.other.rating}
                           onChange={(e) =>
                             updateItem(
                               index,
-                              "power",
                               "other",
+                              "rating",
                               Number(e.target.value),
                             )
                           }
@@ -173,8 +182,9 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                     </td>
                   </tr>
                   <tr>
-                    <th>
-                      {`${item.name}${item.name[item.name.length - 1] === "s" ? "" : "s"}`}{" "}
+                    <th>{`${item.name}${
+                      item.name[item.name.length - 1] === "s" ? "" : "s"
+                    }`}{" "}
                       Used
                     </th>
                     <td>
@@ -182,12 +192,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.used.low}
+                        value={item.low.number}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "used",
                             "low",
+                            "number",
                             Number(e.target.value),
                           )
                         }
@@ -198,12 +208,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.used.medium}
+                        value={item.medium.number}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "used",
                             "medium",
+                            "number",
                             Number(e.target.value),
                           )
                         }
@@ -214,12 +224,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.used.high}
+                        value={item.high.number}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "used",
                             "high",
+                            "number",
                             Number(e.target.value),
                           )
                         }
@@ -230,12 +240,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.used.other}
+                        value={item.other.number}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "used",
                             "other",
+                            "number",
                             Number(e.target.value),
                           )
                         }
@@ -249,12 +259,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.hours.low}
+                        value={item.low.hoursUsed}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "hours",
                             "low",
+                            "hoursUsed",
                             Number(e.target.value),
                           )
                         }
@@ -265,12 +275,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.hours.medium}
+                        value={item.medium.hoursUsed}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "hours",
                             "medium",
+                            "hoursUsed",
                             Number(e.target.value),
                           )
                         }
@@ -281,12 +291,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.hours.high}
+                        value={item.high.hoursUsed}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "hours",
                             "high",
+                            "hoursUsed",
                             Number(e.target.value),
                           )
                         }
@@ -297,12 +307,12 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                         type="number"
                         className="input input-bordered w-full"
                         min={0}
-                        value={item.hours.other}
+                        value={item.other.hoursUsed}
                         onChange={(e) =>
                           updateItem(
                             index,
-                            "hours",
                             "other",
+                            "hoursUsed",
                             Number(e.target.value),
                           )
                         }
@@ -311,38 +321,10 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
                   </tr>
                   <tr>
                     <th>Total Energy Used (Wh)</th>
-                    <td>
-                      {calculateTotalEnergy(
-                        item.power.low,
-                        item.used.low,
-                        item.hours.low,
-                      )}{" "}
-                      Wh
-                    </td>
-                    <td>
-                      {calculateTotalEnergy(
-                        item.power.medium,
-                        item.used.medium,
-                        item.hours.medium,
-                      )}{" "}
-                      Wh
-                    </td>
-                    <td>
-                      {calculateTotalEnergy(
-                        item.power.high,
-                        item.used.high,
-                        item.hours.high,
-                      )}{" "}
-                      Wh
-                    </td>
-                    <td>
-                      {calculateTotalEnergy(
-                        item.power.other,
-                        item.used.other,
-                        item.hours.other,
-                      )}{" "}
-                      Wh
-                    </td>
+                    <td>{item.low.total} Wh</td>
+                    <td>{item.medium.total} Wh</td>
+                    <td>{item.high.total} Wh</td>
+                    <td>{item.other.total} Wh</td>
                   </tr>
                 </tbody>
               </table>
@@ -357,5 +339,6 @@ const Miscellaneous = ({ setTotalMiscEnergyConsumption }) => {
 export default Miscellaneous;
 
 Miscellaneous.propTypes = {
-  setTotalMiscEnergyConsumption: PropTypes.func.isRequired, // Ensure that this function is passed from the parent
+  miscellaneousItems: PropTypes.array,
+  setMiscellaneousItems: PropTypes.func.isRequired, // Ensure that this function is passed from the parent
 };

@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const User = require("./models/user"); // Assuming you have a User model defined
 
 const app = express();
 const mongoURL = "mongodb://localhost:27017/EMSdata";
 
+// Connect to MongoDB
 mongoose
   .connect(mongoURL)
   .then(() => {
@@ -14,16 +16,29 @@ mongoose
     console.error("Failed to connect to MongoDB", err);
   });
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  }),
-);
+app.use(cors());
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Backend says hi!!");
+// POST route to handle form submission
+app.post("/submit", async (req, res) => {
+  try {
+    const { name, email, appliances, misc, totalEnergyConsumption } = req.body;
+
+    const newUser = new User({
+      name,
+      email,
+      appliances,
+      misc,
+      totalEnergyConsumption,
+    });
+
+    await newUser.save();
+
+    res.status(201).json({ message: "Data submitted successfully!" });
+  } catch (error) {
+    console.error("Error saving data", error);
+    res.status(500).json({ message: "Failed to submit data" });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
