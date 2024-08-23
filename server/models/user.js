@@ -1,22 +1,55 @@
 const mongoose = require("mongoose");
 
-const energySchema = new mongoose.Schema({
-  low: Number,
-  medium: Number,
-  high: Number,
-  other: Number,
-});
-
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   appliances: {
     type: Map,
-    of: energySchema,
-    required: true,
+    of: {
+      low: { rating: Number, number: Number, hoursUsed: Number, total: Number },
+      medium: {
+        rating: Number,
+        number: Number,
+        hoursUsed: Number,
+        total: Number,
+      },
+      high: {
+        rating: Number,
+        number: Number,
+        hoursUsed: Number,
+        total: Number,
+      },
+      other: {
+        rating: Number,
+        number: Number,
+        hoursUsed: Number,
+        total: Number,
+      },
+    },
   },
-  misc: energySchema,
-  totalEnergyConsumption: energySchema,
+  misc: [
+    {
+      low: { rating: Number, number: Number, hoursUsed: Number, total: Number },
+      medium: {
+        rating: Number,
+        number: Number,
+        hoursUsed: Number,
+        total: Number,
+      },
+      high: {
+        rating: Number,
+        number: Number,
+        hoursUsed: Number,
+        total: Number,
+      },
+      other: {
+        rating: Number,
+        number: Number,
+        hoursUsed: Number,
+        total: Number,
+      },
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

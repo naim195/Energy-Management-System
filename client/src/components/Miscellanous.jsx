@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
+const Miscellaneous = ({ miscellaneousItems, setMiscellaneousItems }) => {
   const [inputValue, setInputValue] = useState("");
 
   // Handle the addition of a new miscellaneous item
@@ -60,40 +60,40 @@ const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
     setMiscellaneousItems(newItems);
   };
 
-  
-
- 
-
   return (
-    <div>
-      <div>
+    <div className="p-4 bg-base-100 rounded-lg shadow-md">
+      <div className="mb-4">
         {/* Input field for 'Miscellaneous' */}
-        <label className="input input-bordered flex items-center gap-2">
-          <span className="mr-2">Enter Appliance Name:</span>
-          <input
-            type="text"
-            className="grow"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-        </label>
-        <button
-          type="button"
-          className="btn btn-primary mt-2"
-          onClick={addMiscellaneousItem}
-          disabled={!inputValue.trim()}
-        >
-          Add Item
-        </button>
+        <div className="flex flex-col items-center">
+          <label className="flex items-center gap-2 mb-2 w-full">
+            <span className="mr-2">Enter Appliance Name:</span>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </label>
+          <button
+            type="button"
+            className="btn btn-primary w-1/2 mt-2"
+            onClick={addMiscellaneousItem}
+            disabled={!inputValue.trim()}
+          >
+            Add Item
+          </button>
+        </div>
 
         {/* Display tables for all miscellaneous items */}
         {miscellaneousItems.map((item, index) => (
-          <div key={index} className="mt-4">
-            <h3 className="text-lg font-semibold">{item.name}</h3>
-            <div className="overflow-x-auto mt-2">
-              <table className="table w-full">
+          <div key={index} className="mt-6">
+            <h3 className="text-lg font-semibold text-primary mb-2">
+              {item.name}
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="table table-zebra w-full">
                 <thead>
-                  <tr>
+                  <tr className="text-primary-content">
                     <th></th>
                     <th>Low Power</th>
                     <th>Medium Power</th>
@@ -102,7 +102,7 @@ const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className="hover">
                     <th>Power Rating (W)</th>
                     <td>
                       <div className="flex items-center">
@@ -146,7 +146,7 @@ const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
                       <div className="flex items-center">
                         <input
                           type="number"
-                          className="input input-bordered w-full"                          
+                          className="input input-bordered w-full"
                           min={0}
                           value={item.high.rating}
                           onChange={(e) =>
@@ -181,10 +181,11 @@ const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <th>{`${item.name}${
-                      item.name[item.name.length - 1] === "s" ? "" : "s"
-                    }`}{" "}
+                  <tr className="hover">
+                    <th>
+                      {`${item.name}${
+                        item.name[item.name.length - 1] === "s" ? "" : "s"
+                      }`}{" "}
                       Used
                     </th>
                     <td>
@@ -252,7 +253,7 @@ const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
                       />
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="hover">
                     <th>Hours Used</th>
                     <td>
                       <input
@@ -319,12 +320,12 @@ const Miscellaneous = ({ miscellaneousItems,setMiscellaneousItems }) => {
                       />
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="hover">
                     <th>Total Energy Used (Wh)</th>
-                    <td>{item.low.total} Wh</td>
-                    <td>{item.medium.total} Wh</td>
-                    <td>{item.high.total} Wh</td>
-                    <td>{item.other.total} Wh</td>
+                    <td>{item.low.total.toFixed(2)} Wh</td>
+                    <td>{item.medium.total.toFixed(2)} Wh</td>
+                    <td>{item.high.total.toFixed(2)} Wh</td>
+                    <td>{item.other.total.toFixed(2)} Wh</td>
                   </tr>
                 </tbody>
               </table>

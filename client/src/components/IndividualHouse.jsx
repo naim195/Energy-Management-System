@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import AppliancesTable from "./AppliancesTable";
 import Miscellanous from "./Miscellanous";
-// import axios from "axios";
+import axios from "axios";
 
 const IndividualHouse = () => {
   const applianceNames = [
@@ -93,42 +93,64 @@ const IndividualHouse = () => {
     };
     return acc;
   }, {});
-  
 
-  const [applianceNamesEnergyCost, setApplianceNamesEnergyCost] = useState(initialObject);
+  const [applianceNamesEnergyCost, setApplianceNamesEnergyCost] =
+    useState(initialObject);
   const [miscellaneousItems, setMiscellaneousItems] = useState([]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const calculateTotalEnergyConsumption = useCallback(() => {
     const total = { low: 0, medium: 0, high: 0, other: 0 };
-  
+
     // Sum up appliances
     Object.values(applianceNamesEnergyCost).forEach((appliance) => {
-      ['low', 'medium', 'high', 'other'].forEach((category) => {
+      ["low", "medium", "high", "other"].forEach((category) => {
         total[category] += appliance[category].total;
       });
     });
-  
+
     // Sum up miscellaneous items
     miscellaneousItems.forEach((item) => {
-      ['low', 'medium', 'high', 'other'].forEach((category) => {
+      ["low", "medium", "high", "other"].forEach((category) => {
         total[category] += item[category].total;
       });
     });
-  
+
     return total;
   }, [applianceNamesEnergyCost, miscellaneousItems]);
-  
-  
-  const totalEnergyConsumption = useMemo(() => calculateTotalEnergyConsumption(), [calculateTotalEnergyConsumption]);
 
-  
+  const totalEnergyConsumption = useMemo(
+    () => calculateTotalEnergyConsumption(),
+    [calculateTotalEnergyConsumption],
+  );
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    const payload = {
+      name,
+      email,
+      appliances: applianceNamesEnergyCost,
+      misc: miscellaneousItems,
+    };
+
+    try {
+      const response = await axios.post(`${backendUrl}/submit`, payload);
+      if (response.status === 201) {
+        alert("Data submitted successfully");
+        // Optionally, reset the form or redirect the user
+      }
+    } catch (error) {
+      console.error("Error submitting data", error);
+      alert("Error submitting data");
+    }
+  };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
+    <div className="max-w-5xl mx-auto p-6 space-y-8">
       {/* Card for Energy Sources and Preferences */}
       <div className="card max-w-3xl mx-auto bg-base-100 shadow-xl">
         <div className="card-body">
@@ -213,6 +235,9 @@ const IndividualHouse = () => {
 
       {/* Separate Section for the AppliancesTable Component */}
       <div className="card bg-base-100 shadow-xl p-6">
+        <h3 className="text-lg font-semibold mb-4">
+          Appliances Energy Consumption
+        </h3>
         {applianceNames.map((name) => (
           <div key={name}>
             <AppliancesTable
@@ -227,58 +252,87 @@ const IndividualHouse = () => {
 
       {/* Section for Miscellaneous Items */}
       <div className="card bg-base-100 shadow-xl p-6">
-        <p>Add miscellaneous items</p>
+        <h3 className="text-lg font-semibold mb-4">Add Miscellaneous Items</h3>
         <Miscellanous
-          miscellaneousItems={miscellaneousItems } setMiscellaneousItems={setMiscellaneousItems}
+          miscellaneousItems={miscellaneousItems}
+          setMiscellaneousItems={setMiscellaneousItems}
         />
       </div>
 
       {/* Display Total Energy Consumption */}
       <div className="card bg-base-100 shadow-xl p-6">
-        <h3 className="text-lg font-semibold">Total Energy Consumption</h3>
-        <p>Low: {totalEnergyConsumption.low.toFixed(2)} Wh</p>
-        <p>Medium: {totalEnergyConsumption.medium.toFixed(2)} Wh</p>
-        <p>High: {totalEnergyConsumption.high.toFixed(2)} Wh</p>
-        <p>Other: {totalEnergyConsumption.other.toFixed(2)} Wh</p>
-        <p className="font-bold mt-2">
-          Total Energy Consumption: {
-            Object.values(totalEnergyConsumption).reduce((acc, curr) => acc + curr, 0).toFixed(2)
-          } Wh
-        </p>
+        <h3 className="text-2xl font-bold mb-4 text-center">
+          Total Energy Consumption
+        </h3>
+        <div className="grid grid-cols-1 gap-4">
+          <div className="flex justify-between text-lg">
+            <span>Low:</span>
+            <span>{totalEnergyConsumption.low.toFixed(2)} Wh</span>
+          </div>
+          <div className="flex justify-between text-lg">
+            <span>Medium:</span>
+            <span>{totalEnergyConsumption.medium.toFixed(2)} Wh</span>
+          </div>
+          <div className="flex justify-between text-lg">
+            <span>High:</span>
+            <span>{totalEnergyConsumption.high.toFixed(2)} Wh</span>
+          </div>
+          <div className="flex justify-between text-lg">
+            <span>Other:</span>
+            <span>{totalEnergyConsumption.other.toFixed(2)} Wh</span>
+          </div>
+          <div className="flex justify-between text-lg font-bold border-t pt-2 border-gray-300">
+            <span>Total Energy Consumption:</span>
+            <span>
+              {Object.values(totalEnergyConsumption)
+                .reduce((acc, curr) => acc + curr, 0)
+                .toFixed(2)}{" "}
+              Wh
+            </span>
+          </div>
+        </div>
       </div>
 
+      {/* User Information Input */}
       <div className="card bg-base-100 shadow-xl p-6">
-        <div>
-          <label className="block text-sm font-medium mb-2" htmlFor="name">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-2" htmlFor="email">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input input-bordered w-full"
-            required
-          />
+        <h3 className="text-lg font-semibold mb-4">User Information</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2" htmlFor="name">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2" htmlFor="email">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
         </div>
       </div>
 
       {/* Submit Button */}
       <div className="flex justify-center">
-        <button type="submit" className="btn btn-primary btn-wide">
+        <button
+          type="submit"
+          className="btn btn-primary btn-wide"
+          onClick={handleSubmit}
+        >
           Submit
         </button>
       </div>

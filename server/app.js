@@ -1,10 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const User = require("./models/user"); // Assuming you have a User model defined
+const User = require("./models/user");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
-const mongoURL = "mongodb://localhost:27017/EMSdata";
+const mongoURL = process.env.DB_URL;
 
 // Connect to MongoDB
 mongoose
@@ -16,8 +19,18 @@ mongoose
     console.error("Failed to connect to MongoDB", err);
   });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://smart-ems.vercel.app",
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("BAckend says hi!!");
+});
 
 // POST route to handle form submission
 app.post("/submit", async (req, res) => {

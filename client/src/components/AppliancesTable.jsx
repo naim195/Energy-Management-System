@@ -53,27 +53,37 @@ const AppliancesTable = ({
         total: calculateTotalEnergy(otherPower, otherUsed, otherHours),
       },
     };
-  
+
     setApplianceNamesEnergyCost((prevState) => ({
       ...prevState,
       [applianceName]: newEnergyConsumption,
     }));
   }, [
-    lowPower, mediumPower, highPower, otherPower,
-    lowUsed, mediumUsed, highUsed, otherUsed,
-    lowHours, mediumHours, highHours, otherHours,
-    setApplianceNamesEnergyCost, applianceName,
+    lowPower,
+    mediumPower,
+    highPower,
+    otherPower,
+    lowUsed,
+    mediumUsed,
+    highUsed,
+    otherUsed,
+    lowHours,
+    mediumHours,
+    highHours,
+    otherHours,
+    setApplianceNamesEnergyCost,
+    applianceName,
   ]);
 
   return (
-    <div>
+    <div className="bg p-6 rounded-lg shadow-lg">
       <div>
-        <h3>{applianceName}</h3>
+        <h3 className="text-2xl font-bold text-primary">{applianceName}</h3>
       </div>
       <div className="overflow-x-auto mt-4">
-        <table className="table w-full">
+        <table className="table w-full table-zebra">
           <thead>
-            <tr>
+            <tr className=" text-primary-content">
               <th></th>
               <th>Low Power</th>
               <th>Medium Power</th>
@@ -83,65 +93,66 @@ const AppliancesTable = ({
           </thead>
           <tbody>
             <tr>
-              <th>Power Rating (W)</th>
+              <th className="text">Power Rating (W)</th>
               <td>
                 <div className="flex items-center">
                   <input
                     type="number"
-                    className="input input-bordered w-full"
+                    className="input input-bordered input-primary w-full"
                     min={0}
                     value={lowPower}
                     onChange={(e) => setLowPower(Number(e.target.value))}
                   />
-                  <span className="ml-2">W</span>
+                  <span className="ml-2 text-secondary">W</span>
                 </div>
               </td>
               <td>
                 <div className="flex items-center">
                   <input
                     type="number"
-                    className="input input-bordered w-full"
+                    className="input input-bordered input-primary w-full"
                     min={0}
                     value={mediumPower}
                     onChange={(e) => setMediumPower(Number(e.target.value))}
                   />
-                  <span className="ml-2">W</span>
+                  <span className="ml-2 text-secondary">W</span>
                 </div>
               </td>
               <td>
                 <div className="flex items-center">
                   <input
                     type="number"
-                    className="input input-bordered w-full"
+                    className="input input-bordered input-primary w-full"
                     min={0}
                     value={highPower}
                     onChange={(e) => setHighPower(Number(e.target.value))}
                   />
-                  <span className="ml-2">W</span>
+                  <span className="ml-2 text-secondary">W</span>
                 </div>
               </td>
               <td>
                 <div className="flex items-center">
                   <input
                     type="number"
-                    className="input input-bordered w-full"
+                    className="input input-bordered input-primary w-full"
                     min={0}
                     value={otherPower}
                     onChange={(e) => setOtherPower(Number(e.target.value))}
                   />
-                  <span className="ml-2">W</span>
+                  <span className="ml-2 text-secondary">W</span>
                 </div>
               </td>
             </tr>
             <tr>
-              <th>
-                {`${applianceName}${applianceName[applianceName.length - 1] === "s" ? "" : "s"}`}{" "}
-                Used
+              <th className="text">
+                {`${applianceName}${
+                  applianceName[applianceName.length - 1] === "s" ? "" : "s"
+                } Used`}
               </th>
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={lowUsed}
                   onChange={(e) => setLowUsed(Number(e.target.value))}
@@ -150,7 +161,7 @@ const AppliancesTable = ({
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={mediumUsed}
                   onChange={(e) => setMediumUsed(Number(e.target.value))}
@@ -159,7 +170,7 @@ const AppliancesTable = ({
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={highUsed}
                   onChange={(e) => setHighUsed(Number(e.target.value))}
@@ -168,7 +179,7 @@ const AppliancesTable = ({
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={otherUsed}
                   onChange={(e) => setOtherUsed(Number(e.target.value))}
@@ -176,11 +187,11 @@ const AppliancesTable = ({
               </td>
             </tr>
             <tr>
-              <th>Hours Used</th>
+              <th className="text">Hours Used</th>
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={lowHours}
                   onChange={(e) => setLowHours(Number(e.target.value))}
@@ -189,7 +200,7 @@ const AppliancesTable = ({
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={mediumHours}
                   onChange={(e) => setMediumHours(Number(e.target.value))}
@@ -198,7 +209,7 @@ const AppliancesTable = ({
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={highHours}
                   onChange={(e) => setHighHours(Number(e.target.value))}
@@ -207,7 +218,7 @@ const AppliancesTable = ({
               <td>
                 <input
                   type="number"
-                  className="input input-bordered w-full"
+                  className="input input-bordered input-primary w-full"
                   min={0}
                   value={otherHours}
                   onChange={(e) => setOtherHours(Number(e.target.value))}
@@ -215,7 +226,7 @@ const AppliancesTable = ({
               </td>
             </tr>
             <tr>
-              <th>Total Energy Used (Wh)</th>
+              <th className="text">Total Energy Used (Wh)</th>
               <td>{calculateTotalEnergy(lowPower, lowUsed, lowHours)} Wh</td>
               <td>
                 {calculateTotalEnergy(mediumPower, mediumUsed, mediumHours)} Wh
