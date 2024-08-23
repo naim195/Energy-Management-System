@@ -12,7 +12,6 @@ const Graphs = () => {
               id="pic2a"
               src="/assets/Total Energy Consumption and Generation Using Optimised EMS.png"
               alt="Total Energy Consumption"
-              className="w-full max-w-[500px] h-auto rounded-lg"
             />
           </div>
           <div className="flex justify-center mb-6">
@@ -20,7 +19,6 @@ const Graphs = () => {
               id="pic2b"
               src="/assets/Total Energy Consumption and Generation Using Conventional EMS.png"
               alt="Total Energy Consumption"
-              className="w-full max-w-[500px] h-auto rounded-lg"
             />
           </div>
         </div>
@@ -47,7 +45,6 @@ const Graphs = () => {
             id="gif3"
             src="/assets/load_animation_combined.gif"
             alt="Power Flow Animation"
-            className="w-full max-w-[500px] h-auto rounded-lg"
           />
         </div>
         <div className="description text-gray-800 text-center max-w-3xl">
@@ -68,12 +65,7 @@ const Graphs = () => {
           Cost Breakdown
         </h2>
         <div className="flex justify-center mb-6">
-          <img
-            id="gif4"
-            src="/assets/cost_animation_combined.gif"
-            alt="Cost Breakdown Animation"
-            className="w-full max-w-[500px] h-auto rounded-lg"
-          />
+          <video src="/assets/1440_Grid_price.mp4" autoPlay loop />
         </div>
         <div className="description text-gray-800 text-center max-w-3xl mx-auto">
           <p className="text-sm">
@@ -86,9 +78,11 @@ const Graphs = () => {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
-        <h2>Carbon Emission Comparison</h2>
-        <video src="/assets/1440_Grid_price.mp4" autoPlay loop />
+      <div className="flex flex-col items-center justify-center bg-gradient-to-r from-blue-100 to-green-100 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 w-full">
+        <h2 className="text-2xl font-bold mb-4 text-center text-yellow-800">
+          Carbon Emission Comparison
+        </h2>
+        <video src="/assets/all_CO2_Emissions.mp4" autoPlay loop />
       </div>
     </div>
   );
