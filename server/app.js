@@ -29,7 +29,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("BAckend says hi!!");
+  res.send("Backend says hi!!");
 });
 
 // POST route to handle form submission
