@@ -21,7 +21,7 @@ mongoose
 
 app.use(
   cors({
-    origin: "https://smart-ems.vercel.app",
+    origin: "https://smart-ems.vercel.app/",
     credentials: true,
   }),
 );
