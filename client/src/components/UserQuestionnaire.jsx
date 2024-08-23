@@ -42,15 +42,15 @@ const UserQuestionnaire = () => {
       <div className="border p-6 rounded-lg bg-white shadow-md">
         {activeSection === "Individual House" && <IndividualHouse />}
         {activeSection === "Apartments" && (
-          <div>
+          <div className="max-w-3/4">
             <h2 className="text-xl font-semibold mb-4">Apartments</h2>
-            <p>Content for Apartments goes here...</p>
+            <p>This section will be updated soon.</p>
           </div>
         )}
         {activeSection === "Micro Industry" && (
-          <div>
+          <div className="max-w-3/4">
             <h2 className="text-xl font-semibold mb-4">Micro Industry</h2>
-            <p>Content for Micro Industry goes here...</p>
+            <p>This section will be updated soon.</p>
           </div>
         )}
       </div>

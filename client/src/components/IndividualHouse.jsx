@@ -4,6 +4,19 @@ import Miscellanous from "./Miscellanous";
 import axios from "axios";
 
 const IndividualHouse = () => {
+  const [choices, setChoices] = useState({
+    energySource: "",
+    dieselUse: "",
+    energyGoal: "",
+  });
+
+  const handleChoiceChange = (e) => {
+    setChoices({
+      ...choices,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const applianceNames = [
     "LED bulbs",
     "LED Tubes",
@@ -135,9 +148,8 @@ const IndividualHouse = () => {
       email,
       appliances: applianceNamesEnergyCost,
       misc: miscellaneousItems,
+      choices: choices,
     };
-
-    console.log(payload);
 
     try {
       const response = await axios.post(`${backendUrl}/submit`, payload);
@@ -173,6 +185,7 @@ const IndividualHouse = () => {
                         type="radio"
                         name="energySources"
                         className="radio radio-primary mr-3"
+                        onChange={handleChoiceChange}
                       />
                       <span>{source}</span>
                     </label>
@@ -196,6 +209,7 @@ const IndividualHouse = () => {
                       type="radio"
                       name="dieselUse"
                       className="radio radio-primary mr-3"
+                      onChange={handleChoiceChange}
                     />
                     <span>{option}</span>
                   </label>
@@ -216,6 +230,7 @@ const IndividualHouse = () => {
                     type="radio"
                     name="energyGoal"
                     className="radio radio-primary mr-3"
+                    onChange={handleChoiceChange}
                   />
                   <span>Make profit by selling electricity to the grid</span>
                 </label>
@@ -224,6 +239,7 @@ const IndividualHouse = () => {
                     type="radio"
                     name="energyGoal"
                     className="radio radio-primary mr-3"
+                    onChange={handleChoiceChange}
                   />
                   <span>
                     Be self-sustainable in energy generation and consumption

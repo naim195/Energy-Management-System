@@ -29,23 +29,39 @@ app.get("/", (req, res) => {
 // POST route to handle form submission
 app.post("/submit", async (req, res) => {
   try {
-    const { name, email, appliances, misc } = req.body;
+    const { name, email, appliances, misc, choices } = req.body;
 
-    const newUser = new User({
-      name,
-      email,
-      appliances,
-      misc,      
-    });
+    
+    const existingUser = await User.findOne({ email });
 
-    await newUser.save();
+    if (existingUser) {
+      // Update the existing user with the new values
+      existingUser.name = name;
+      existingUser.appliances = appliances;
+      existingUser.misc = misc;
+      existingUser.choices = choices;
 
-    res.status(201).json({ message: "Data submitted successfully!" });
+      await existingUser.save();
+      res.status(200).json({ message: "User data updated successfully!" });
+    } else {
+      // Create a new user
+      const newUser = new User({
+        name,
+        email,
+        appliances,
+        misc,
+        choices, 
+      });
+
+      await newUser.save();
+      res.status(201).json({ message: "New user created and data submitted successfully!" });
+    }
   } catch (error) {
     console.error("Error saving data", error);
     res.status(500).json({ message: "Failed to submit data" });
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
