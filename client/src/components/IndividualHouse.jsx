@@ -5,17 +5,38 @@ import axios from "axios";
 
 const IndividualHouse = () => {
   const [choices, setChoices] = useState({
-    energySource: "",
+    energySource: [],
     dieselUse: "",
     energyGoal: "",
   });
 
   const handleChoiceChange = (e) => {
-    setChoices({
-      ...choices,
-      [e.target.name]: e.target.value,
+    const { name, value, type, checked } = e.target;
+    console.log(choices);
+    setChoices((prevChoices) => {
+      if (type === "checkbox") {
+        // Handle checkboxes
+        if (checked) {
+          return {
+            ...prevChoices,
+            [name]: [...(prevChoices[name] || []), value],
+          };
+        } else {
+          return {
+            ...prevChoices,
+            [name]: prevChoices[name].filter((item) => item !== value),
+          };
+        }
+      } else if (type === "radio") {
+        // Handle radio buttons
+        return {
+          ...prevChoices,
+          [name]: value,
+        };
+      }
+      return prevChoices; // Return the unchanged state for other types
     });
-  };
+  };  
 
   const applianceNames = [
     "LED bulbs",
@@ -178,21 +199,20 @@ const IndividualHouse = () => {
                 What energy sources do you have or want in your microgrid?
               </h3>
               <div className="grid grid-cols-2 gap-4">
-                {["Solar PV", "Battery", "Diesel Generator", "Grid"].map(
-                  (source) => (
-                    <label key={source} className="flex items-center">
-                      <input
-                        type="radio"
-                        name="energySource" // Changed from "energySources"
-                        className="radio radio-primary mr-3"
-                        value={source} // Add value for the radio button
-                        onChange={handleChoiceChange}
-                      />
-                      <span>{source}</span>
-                    </label>
-                  ),
-                )}
-              </div>
+  {["Solar PV", "Battery", "Diesel Generator", "Grid"].map((source) => (
+    <label key={source} className="flex items-center">
+      <input
+        type="checkbox"
+        name="energySource" // Keep name the same for grouping
+        className="checkbox checkbox-primary mr-3"
+        value={source}
+        onChange={handleChoiceChange} // Adjust the handler for checkboxes
+      />
+      <span>{source}</span>
+    </label>
+  ))}
+</div>
+
             </div>
 
             <div className="divider"></div>

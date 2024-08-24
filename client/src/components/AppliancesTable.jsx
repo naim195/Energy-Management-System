@@ -187,12 +187,13 @@ const AppliancesTable = ({
               </td>
             </tr>
             <tr>
-              <th className="text">Hours Used</th>
+              <th className="text">Avg hours per item</th>
               <td>
                 <input
                   type="number"
                   className="input input-bordered input-primary w-full"
                   min={0}
+                  max={24}
                   value={lowHours}
                   onChange={(e) => setLowHours(Number(e.target.value))}
                 />
@@ -202,6 +203,7 @@ const AppliancesTable = ({
                   type="number"
                   className="input input-bordered input-primary w-full"
                   min={0}
+                  max={24}
                   value={mediumHours}
                   onChange={(e) => setMediumHours(Number(e.target.value))}
                 />
@@ -211,6 +213,7 @@ const AppliancesTable = ({
                   type="number"
                   className="input input-bordered input-primary w-full"
                   min={0}
+                  max={24}
                   value={highHours}
                   onChange={(e) => setHighHours(Number(e.target.value))}
                 />
@@ -220,6 +223,7 @@ const AppliancesTable = ({
                   type="number"
                   className="input input-bordered input-primary w-full"
                   min={0}
+                  max={24}
                   value={otherHours}
                   onChange={(e) => setOtherHours(Number(e.target.value))}
                 />
