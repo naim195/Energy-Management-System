@@ -56,6 +56,7 @@ const userSchema = new mongoose.Schema({
     dieselUse: String,
     energyGoal: String,
   },
+  totalEnergyUsage: Number,
 });
 
 const User = mongoose.model("User", userSchema);

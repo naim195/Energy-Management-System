@@ -29,7 +29,8 @@ app.get("/", (req, res) => {
 // POST route to handle form submission
 app.post("/submit", async (req, res) => {
   try {
-    const { name, email, appliances, misc, choices } = req.body;
+    const { name, email, appliances, misc, choices, totalEnergyUsage } =
+      req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -39,6 +40,7 @@ app.post("/submit", async (req, res) => {
       existingUser.appliances = appliances;
       existingUser.misc = misc;
       existingUser.choices = choices;
+      existingUser.totalEnergyUsage = totalEnergyUsage;
 
       await existingUser.save();
       res.status(200).json({ message: "User data updated successfully!" });
@@ -50,6 +52,7 @@ app.post("/submit", async (req, res) => {
         appliances,
         misc,
         choices,
+        totalEnergyUsage,
       });
 
       await newUser.save();

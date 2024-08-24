@@ -36,7 +36,7 @@ const IndividualHouse = () => {
       }
       return prevChoices; // Return the unchanged state for other types
     });
-  };  
+  };
 
   const applianceNames = [
     "LED bulbs",
@@ -161,6 +161,13 @@ const IndividualHouse = () => {
     [calculateTotalEnergyConsumption],
   );
 
+  const totalEnergyUsage = useMemo(() => {
+    return Object.values(totalEnergyConsumption).reduce(
+      (acc, curr) => acc + curr,
+      0,
+    );
+  }, [totalEnergyConsumption]);
+
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
@@ -170,6 +177,7 @@ const IndividualHouse = () => {
       appliances: applianceNamesEnergyCost,
       misc: miscellaneousItems,
       choices: choices,
+      totalEnergyUsage: totalEnergyUsage,
     };
 
     try {
@@ -199,20 +207,21 @@ const IndividualHouse = () => {
                 What energy sources do you have or want in your microgrid?
               </h3>
               <div className="grid grid-cols-2 gap-4">
-  {["Solar PV", "Battery", "Diesel Generator", "Grid"].map((source) => (
-    <label key={source} className="flex items-center">
-      <input
-        type="checkbox"
-        name="energySource" // Keep name the same for grouping
-        className="checkbox checkbox-primary mr-3"
-        value={source}
-        onChange={handleChoiceChange} // Adjust the handler for checkboxes
-      />
-      <span>{source}</span>
-    </label>
-  ))}
-</div>
-
+                {["Solar PV", "Battery", "Diesel Generator", "Grid"].map(
+                  (source) => (
+                    <label key={source} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="energySource" // Keep name the same for grouping
+                        className="checkbox checkbox-primary mr-3"
+                        value={source}
+                        onChange={handleChoiceChange} // Adjust the handler for checkboxes
+                      />
+                      <span>{source}</span>
+                    </label>
+                  ),
+                )}
+              </div>
             </div>
 
             <div className="divider"></div>
