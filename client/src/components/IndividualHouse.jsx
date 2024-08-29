@@ -1,42 +1,23 @@
-import { useCallback, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import AppliancesTable from "./AppliancesTable";
 import Miscellanous from "./Miscellanous";
 import axios from "axios";
+import EnergyContext from "../EnergyContext";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const IndividualHouse = () => {
-  const [choices, setChoices] = useState({
-    energySource: [],
-    dieselUse: "",
-    energyGoal: "",
-  });
+  const {
+    choices,
 
-  const handleChoiceChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    console.log(choices);
-    setChoices((prevChoices) => {
-      if (type === "checkbox") {
-        // Handle checkboxes
-        if (checked) {
-          return {
-            ...prevChoices,
-            [name]: [...(prevChoices[name] || []), value],
-          };
-        } else {
-          return {
-            ...prevChoices,
-            [name]: prevChoices[name].filter((item) => item !== value),
-          };
-        }
-      } else if (type === "radio") {
-        // Handle radio buttons
-        return {
-          ...prevChoices,
-          [name]: value,
-        };
-      }
-      return prevChoices; // Return the unchanged state for other types
-    });
-  };
+    handleChoiceChange,
+    applianceNamesEnergyCost,
+    setApplianceNamesEnergyCost,
+    miscellaneousItems,
+    setMiscellaneousItems,
+    totalEnergyConsumption,
+    totalEnergyUsage,
+  } = useContext(EnergyContext);
 
   const applianceNames = [
     "LED bulbs",
@@ -98,78 +79,15 @@ const IndividualHouse = () => {
     "Water Pump": [1000, 1500, 2000],
   };
 
-  const initialObject = applianceNames.reduce((acc, name) => {
-    acc[name] = {
-      low: {
-        rating: 0,
-        number: 0,
-        hoursUsed: 0,
-        total: 0,
-      },
-      medium: {
-        rating: 0,
-        number: 0,
-        hoursUsed: 0,
-        total: 0,
-      },
-      high: {
-        rating: 0,
-        number: 0,
-        hoursUsed: 0,
-        total: 0,
-      },
-      other: {
-        rating: 0,
-        number: 0,
-        hoursUsed: 0,
-        total: 0,
-      },
-    };
-    return acc;
-  }, {});
-
-  const [applianceNamesEnergyCost, setApplianceNamesEnergyCost] =
-    useState(initialObject);
-  const [miscellaneousItems, setMiscellaneousItems] = useState([]);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-  const calculateTotalEnergyConsumption = useCallback(() => {
-    const total = { low: 0, medium: 0, high: 0, other: 0 };
-
-    // Sum up appliances
-    Object.values(applianceNamesEnergyCost).forEach((appliance) => {
-      ["low", "medium", "high", "other"].forEach((category) => {
-        total[category] += appliance[category].total;
-      });
-    });
-
-    // Sum up miscellaneous items
-    miscellaneousItems.forEach((item) => {
-      ["low", "medium", "high", "other"].forEach((category) => {
-        total[category] += item[category].total;
-      });
-    });
-
-    return total;
-  }, [applianceNamesEnergyCost, miscellaneousItems]);
-
-  const totalEnergyConsumption = useMemo(
-    () => calculateTotalEnergyConsumption(),
-    [calculateTotalEnergyConsumption],
-  );
-
-  const totalEnergyUsage = useMemo(() => {
-    return Object.values(totalEnergyConsumption).reduce(
-      (acc, curr) => acc + curr,
-      0,
-    );
-  }, [totalEnergyConsumption]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
+  const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // State for Snackbar severity
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
     const payload = {
       name,
@@ -183,13 +101,20 @@ const IndividualHouse = () => {
     try {
       const response = await axios.post(`${backendUrl}/submit`, payload);
       if (response.status === 201) {
-        alert("Data submitted successfully");
-        // Optionally, reset the form or redirect the user
+        setSnackbarMessage("Data submitted successfully");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
       }
     } catch (error) {
       console.error("Error submitting data", error);
-      alert("Error submitting data");
+      setSnackbarMessage("Error submitting data");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -387,6 +312,20 @@ const IndividualHouse = () => {
           Submit
         </button>
       </div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

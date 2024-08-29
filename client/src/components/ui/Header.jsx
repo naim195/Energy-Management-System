@@ -7,6 +7,7 @@ const navigationItems = [
   { name: "Home", href: "/" },
   { name: "User Interaction", href: "/user-interaction" },
   { name: "Impact", href: "/impact" },
+  { name: "Case Studies", href: "/case-studies" },
 ];
 
 export default function Header() {

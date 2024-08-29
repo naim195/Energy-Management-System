@@ -1,8 +1,6 @@
 const Graphs = () => {
   return (
     <div className="container mx-auto p-4 max-w grid grid-cols-1 md:grid-cols-2 gap-8">
-      
-
       {/* Power Flow GIF */}
       <div className="flex flex-col items-center justify-center bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
         <h2 className="text-2xl font-bold mb-4 text-center text-purple-800">
