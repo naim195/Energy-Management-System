@@ -1,8 +1,10 @@
 import { useState } from "react";
-import IndividualHouse from "./IndividualHouse";
+import IndividualHouse from "../userInteraction/IndividualHouse";
 
 const UserQuestionnaire = () => {
-  const [activeSection, setActiveSection] = useState("Individual House");
+  const [activeSection, setActiveSection] = useState(
+    "Individual House"
+  );
 
   return (
     <div className="p-6 bg-gradient-to-b from-blue-200 to-green-200">
@@ -49,7 +51,9 @@ const UserQuestionnaire = () => {
         )}
         {activeSection === "Micro Industry" && (
           <div className="max-w-3/4">
-            <h2 className="text-xl font-semibold mb-4">Micro Industry</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              Micro Industry
+            </h2>
             <p>This section will be updated soon.</p>
           </div>
         )}

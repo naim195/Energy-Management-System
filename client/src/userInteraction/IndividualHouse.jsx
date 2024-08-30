@@ -99,7 +99,10 @@ const IndividualHouse = () => {
     };
 
     try {
-      const response = await axios.post(`${backendUrl}/submit`, payload);
+      const response = await axios.post(
+        `${backendUrl}/submit`,
+        payload
+      );
       if (response.status === 201) {
         setSnackbarMessage("Data submitted successfully");
         setSnackbarSeverity("success");
@@ -129,23 +132,27 @@ const IndividualHouse = () => {
             {/* Section: Energy Sources */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">
-                What energy sources do you have or want in your microgrid?
+                What energy sources do you have or want in your
+                microgrid?
               </h3>
               <div className="grid grid-cols-2 gap-4">
-                {["Solar PV", "Battery", "Diesel Generator", "Grid"].map(
-                  (source) => (
-                    <label key={source} className="flex items-center">
-                      <input
-                        type="checkbox"
-                        name="energySource" // Keep name the same for grouping
-                        className="checkbox checkbox-primary mr-3"
-                        value={source}
-                        onChange={handleChoiceChange} // Adjust the handler for checkboxes
-                      />
-                      <span>{source}</span>
-                    </label>
-                  ),
-                )}
+                {[
+                  "Solar PV",
+                  "Battery",
+                  "Diesel Generator",
+                  "Grid",
+                ].map((source) => (
+                  <label key={source} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="energySource" // Keep name the same for grouping
+                      className="checkbox checkbox-primary mr-3"
+                      value={source}
+                      onChange={handleChoiceChange} // Adjust the handler for checkboxes
+                    />
+                    <span>{source}</span>
+                  </label>
+                ))}
               </div>
             </div>
 
@@ -189,7 +196,9 @@ const IndividualHouse = () => {
                     value="Make profit by selling electricity to the grid" // Add value for the radio button
                     onChange={handleChoiceChange}
                   />
-                  <span>Make profit by selling electricity to the grid</span>
+                  <span>
+                    Make profit by selling electricity to the grid
+                  </span>
                 </label>
                 <label className="flex items-center">
                   <input
@@ -200,7 +209,8 @@ const IndividualHouse = () => {
                     onChange={handleChoiceChange}
                   />
                   <span>
-                    Be self-sustainable in energy generation and consumption
+                    Be self-sustainable in energy generation and
+                    consumption
                   </span>
                 </label>
               </div>
@@ -219,7 +229,9 @@ const IndividualHouse = () => {
             <AppliancesTable
               applianceName={name}
               defaultValues={defaultValues[name] || [0, 0, 0]}
-              setApplianceNamesEnergyCost={setApplianceNamesEnergyCost}
+              setApplianceNamesEnergyCost={
+                setApplianceNamesEnergyCost
+              }
             />
             <div className="divider"></div>
           </div>
@@ -228,7 +240,9 @@ const IndividualHouse = () => {
 
       {/* Section for Miscellaneous Items */}
       <div className="card bg-base-100 shadow-xl p-6">
-        <h3 className="text-lg font-semibold mb-4">Add Miscellaneous Items</h3>
+        <h3 className="text-lg font-semibold mb-4">
+          Add Miscellaneous Items
+        </h3>
         <Miscellanous
           miscellaneousItems={miscellaneousItems}
           setMiscellaneousItems={setMiscellaneousItems}
@@ -271,10 +285,15 @@ const IndividualHouse = () => {
 
       {/* User Information Input */}
       <div className="card bg-base-100 shadow-xl p-6">
-        <h3 className="text-lg font-semibold mb-4">User Information</h3>
+        <h3 className="text-lg font-semibold mb-4">
+          User Information
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2" htmlFor="name">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="name"
+            >
               Name
             </label>
             <input
@@ -287,7 +306,10 @@ const IndividualHouse = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" htmlFor="email">
+            <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
