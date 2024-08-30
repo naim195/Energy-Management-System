@@ -7,7 +7,7 @@ const CaseStudies = () => {
   const [activeSection, setActiveSection] = useState("Case Study 1");
 
   return (
-    <div className="p-6 bg-gradient-to-b from-blue-200 to-green-200">
+    <div className="p-6">
       <div className="flex justify-center mb-6">
         <button
           className={`mx-2 px-4 py-2 rounded-lg ${
@@ -40,14 +40,10 @@ const CaseStudies = () => {
           Techno-economic Analysis
         </button>
       </div>
-      <div className="border p-6 rounded-lg bg-white shadow-md">
+      <div className="border p-6 rounded-lg bg-white shadow-md bg-gradient-to-r from-blue-100 to-green-100">
         {activeSection === "Case Study 1" && <CaseStudy1 />}
-        {activeSection === "Case Study 2" && (
-          <CaseStudy2/>
-        )}
-        {activeSection === "Techno Analysis" && (
-          <TechnoAnalysis/>
-        )}
+        {activeSection === "Case Study 2" && <CaseStudy2 />}
+        {activeSection === "Techno Analysis" && <TechnoAnalysis />}
       </div>
     </div>
   );

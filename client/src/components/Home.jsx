@@ -49,7 +49,7 @@ const Home = () => {
               {/* Video animation */}
               <div className="flex flex-col align-center">
                 <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
-                  Power Flow Animation
+                  Power Flow
                 </h2>
                 <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl">
                   <video
@@ -63,7 +63,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row gap-8 mt-10">
               <div className="flex-1">
                 <div className="card bg-blue-50 p-6 rounded-xl shadow-inner">
                   <h2 className="text-2xl font-bold text-blue-700 mb-4">
@@ -81,11 +81,11 @@ const Home = () => {
                   </ul>
                 </div>
               </div>
-              <div className="flex-1 m-auto">
-                <div className="card bg-blue-50 p-6 rounded-xl shadow-inner">
-                  <h3 className="text-xl font-semibold text-blue-800 mb-4">
+              <div className="flex-1">
+                <div className="card bg-blue-50 p-6 rounded-xl shadow-inner h-full">
+                  <h2 className="text-2xl font-bold text-blue-700 mb-4">
                     Power Flow Dynamics
-                  </h3>
+                  </h2>
                   <ul className="space-y-3">
                     {powerFlowItems.map((item, index) => (
                       <PowerFlowItem

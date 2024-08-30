@@ -21,7 +21,11 @@ export default function Header() {
         className="flex max-w-full items-center justify-between p-6 lg:px-8 h-full"
       >
         <div className="flex lg:flex-1 lg:justify-start">
-          <Link to="/" className="-m-1.5 p-1.5">
+          <Link
+            to="https://sites.google.com/view/spel-iitgn"
+            className="-m-1.5 p-1.5"
+            target="_blank"
+          >
             <span className="sr-only">Your Company</span>
             <img
               alt="Your Company"
@@ -46,7 +50,11 @@ export default function Header() {
           ))}
         </div>
         <div className="flex lg:flex-1 lg:justify-end">
-          <Link to="/" className="-m-1.5 p-1.5">
+          <Link
+            to="https://iitgn.ac.in/faculty/ee/fac-pallavi"
+            className="-m-1.5 p-1.5"
+            target="_blank"
+          >
             <span className="sr-only">IITGN</span>
             <img
               alt="IITGN logo"

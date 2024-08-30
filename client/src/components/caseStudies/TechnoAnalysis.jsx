@@ -1,6 +1,4 @@
 const TechnoAnalysis = () => {
-  return (
-    <div>TechnoAnalysis</div>
-  )
-}
-export default TechnoAnalysis
+  return <div>TechnoAnalysis</div>;
+};
+export default TechnoAnalysis;
