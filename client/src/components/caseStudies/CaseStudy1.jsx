@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import EnergyContext from "../../EnergyContext";
 import axios from "axios";
 import { Snackbar, Alert } from "@mui/material";
@@ -11,6 +11,13 @@ const CaseStudy1 = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const savedResponse = localStorage.getItem("energyManagementResponse");
+    if (savedResponse) {
+      setResponse(JSON.parse(savedResponse));
+    }
+  }, []);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -26,6 +33,12 @@ const CaseStudy1 = () => {
           Total_energy_consumption: totalEnergyUsageNumber,
         },
       );
+
+      localStorage.setItem(
+        "energyManagementResponse",
+        JSON.stringify(res.data),
+      );
+
       setResponse(res.data);
     } catch (err) {
       setError(err.message);
@@ -40,7 +53,7 @@ const CaseStudy1 = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
+    <div className="max-w-6xl mx-auto p-6 space-y-8">
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold mb-6 text-center">
@@ -58,7 +71,7 @@ const CaseStudy1 = () => {
                 id="energy-usage"
                 value={totalEnergyUsageInput}
                 onChange={(e) => setTotalEnergyUsageInput(e.target.value)}
-                className=""
+                className="grow"
                 required
               />{" "}
               Wh
@@ -101,15 +114,84 @@ const CaseStudy1 = () => {
               <h3 className="card-title text-xl font-semibold">
                 Economic Analysis
               </h3>
-              <ul className="list-disc pl-6">
-                {Object.entries(response["Economic Analysis"]).map(
-                  ([key, value]) => (
-                    <li key={key}>
-                      {key}: {value}
-                    </li>
-                  ),
-                )}
-              </ul>
+              <table className="table table-zebra">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2">Parameter</th>
+                    <th className="px-4 py-2">Dual Mode (Rs)</th>
+                    <th className="px-4 py-2">On-Grid (Rs)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className=" px-4 py-2">Solar Panel Cost</td>
+                    <td className=" px-4 py-2">
+                      {response["Economic Analysis"]["Solar Panel Cost (Rs)"]}
+                    </td>
+                    <td className=" px-4 py-2">0</td>
+                  </tr>
+                  <tr>
+                    <td className=" px-4 py-2">Battery Cost</td>
+                    <td className=" px-4 py-2">
+                      {response["Economic Analysis"]["Battery Cost (Rs)"]}
+                    </td>
+                    <td className=" px-4 py-2">0</td>
+                  </tr>
+                  <tr>
+                    <td className=" px-4 py-2">Inverter Cost</td>
+                    <td className=" px-4 py-2">
+                      {response["Economic Analysis"]["Inverter Cost (Rs)"]}
+                    </td>
+                    <td className=" px-4 py-2">0</td>
+                  </tr>
+                  <tr>
+                    <td className=" px-4 py-2">DC-DC Converter Cost</td>
+                    <td className=" px-4 py-2">
+                      {
+                        response["Economic Analysis"][
+                          "DC-DC Converter Cost (Rs)"
+                        ]
+                      }
+                    </td>
+                    <td className=" px-4 py-2">0</td>
+                  </tr>
+                  <tr>
+                    <td className=" px-4 py-2">Installation Cost</td>
+                    <td className=" px-4 py-2">
+                      {
+                        response["Economic Analysis"][
+                          "Installation Cost Dual Mode (Rs)"
+                        ]
+                      }
+                    </td>
+                    <td className=" px-4 py-2">
+                      {
+                        response["Economic Analysis"][
+                          "Installation Cost On-Grid (Rs)"
+                        ]
+                      }
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td className=" px-4 py-2">Annual O&M Cost</td>
+                    <td className=" px-4 py-2">
+                      {
+                        response["Economic Analysis"][
+                          "Annual O&M Cost Dual Mode (Rs)"
+                        ]
+                      }
+                    </td>
+                    <td className=" px-4 py-2">
+                      {
+                        response["Economic Analysis"][
+                          "Annual O&M Cost On-Grid (Rs)"
+                        ]
+                      }
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -144,18 +226,27 @@ const CaseStudy1 = () => {
                 generation will be stopped, and the amount of energy loss is
                 related to grid outage time.
               </p>
-              <div className="space-y-4">
+              <div className="space-y-4 grid grid-cols-3 justify-center align-center gap-2">
                 {[
-                  "Daytime Outage Cost",
-                  "Nighttime Outage Cost",
-                  "On-Grid Daytime Outage Cost",
-                ].map((key) => (
-                  <div key={key} className="space-y-2">
-                    <h4 className="text-lg font-medium">{key}</h4>
+                  {
+                    key: "Daytime Outage Cost",
+                  },
+                  {
+                    key: "Nighttime Outage Cost",
+                  },
+                  {
+                    key: "On-Grid Daytime Outage Cost",
+                  },
+                ].map(({ key }) => (
+                  <div
+                    key={key}
+                    className="space-y-2 flex flex-col justify-center align-center"
+                  >
+                    <h4 className="text-lg font-medium text-center">{key}</h4>
                     <img
                       src={`data:image/png;base64,${response["Plots"][key]}`}
                       alt={key}
-                      className="rounded-lg shadow-md"
+                      className="w-full h-auto rounded-lg shadow-md"
                     />
                   </div>
                 ))}
@@ -178,11 +269,27 @@ const CaseStudy1 = () => {
                 <h4 className="text-lg font-medium">
                   Simple Payback Period Comparison
                 </h4>
-                <img
-                  src={`data:image/png;base64,${response["Plots"]["Simple Payback Period Comparison"]}`}
-                  alt="Simple Payback Period Comparison"
-                  className="rounded-lg shadow-md"
-                />
+                <p className="mb-2">
+                  The simple payback period for the dual mode system is{" "}
+                  {
+                    response["Simple Payback Period"][
+                      "Dual Mode System (years)"
+                    ]
+                  }{" "}
+                  years
+                </p>
+                <p className="mb-2">
+                  The simple payback period for the on-grid system is{" "}
+                  {response["Simple Payback Period"]["On-Grid System (years)"]}{" "}
+                  years
+                </p>
+                <div className="flex justify-center items-center">
+                  <img
+                    src={`data:image/png;base64,${response["Plots"]["Simple Payback Period Comparison"]}`}
+                    alt="Simple Payback Period Comparison"
+                    className="w-3/4 h-auto rounded-lg shadow-md"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -202,11 +309,21 @@ const CaseStudy1 = () => {
                 <h4 className="text-lg font-medium">
                   Carbon Emission Comparison
                 </h4>
-                <img
-                  src={`data:image/png;base64,${response["Plots"]["Carbon Emission Comparison"]}`}
-                  alt="Carbon Emission Comparison"
-                  className="rounded-lg shadow-md"
-                />
+                <p className="mb-2">
+                  The carbon emission for the dual mode system is{" "}
+                  {response["Carbon Emission"]["Dual Mode System (Ton)"]} Ton
+                </p>
+                <p className="mb-2">
+                  The carbon emission for the on-grid system is{" "}
+                  {response["Carbon Emission"]["On-Grid System (Ton)"]} Ton
+                </p>
+                <div className="flex justify-center items-center">
+                  <img
+                    src={`data:image/png;base64,${response["Plots"]["Carbon Emission Comparison"]}`}
+                    alt="Carbon Emission Comparison"
+                    className="w-3/4 rounded-lg shadow-md"
+                  />
+                </div>
               </div>
             </div>
           </div>

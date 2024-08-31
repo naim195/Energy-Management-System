@@ -1,6 +1,6 @@
 import { Alert, Snackbar } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CaseStudy2 = () => {
   const [installedPower, setInstalledPower] = useState(0);
@@ -9,6 +9,14 @@ const CaseStudy2 = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    // Retrieve the plot data from localStorage when the component mounts
+    const savedPlot = localStorage.getItem("solarPanelPlot");
+    if (savedPlot) {
+      setResponse({ plot_image: savedPlot });
+    }
+  }, []);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -25,6 +33,10 @@ const CaseStudy2 = () => {
           panel_age: panelAgeNumber,
         },
       );
+
+      // Save the plot image data to localStorage
+      localStorage.setItem("solarPanelPlot", res.data.plot_image);
+
       setResponse(res.data);
     } catch (err) {
       setError(err.message);
@@ -57,7 +69,7 @@ const CaseStudy2 = () => {
                 id="energy-usage"
                 value={installedPower}
                 onChange={(e) => setInstalledPower(e.target.value)}
-                className=""
+                className="grow"
                 required
                 min={0}
               />{" "}
@@ -76,7 +88,7 @@ const CaseStudy2 = () => {
                 id="panel-age"
                 value={panelAge}
                 onChange={(e) => setPanelAge(e.target.value)}
-                className=""
+                className="grow"
                 required
                 min={0}
               />{" "}

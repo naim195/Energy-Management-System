@@ -30,9 +30,42 @@ const Home = () => {
               Energy Management System (EMS)
             </h1>
 
-            <div className="grid grid-cols-2 gap-20 items-center">
+            <div className="flex flex-col gap-8 items-center">
+              {/* Video animations */}
+              <div className="flex flex-col md:flex-row gap-8 w-full">
+                <div className="w-full md:w-1/2">
+                  <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
+                    Power Flow
+                  </h2>
+                  <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl border-4 ">
+                    <video
+                      src="/assets/Home/2nd_tab_big.mp4"
+                      className="object-cover w-full h-full absolute top-10 right-10 scale-110 transform origin-center"
+                      autoPlay
+                      loop
+                      muted
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full md:w-1/2">
+                  <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
+                    Island Mode Power Flow
+                  </h2>
+                  <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl border-4 ">
+                    <video
+                      src="/assets/Home/Island_Mode_EMS_controled_power_flow_animation.mp4"
+                      className="object-cover w-full h-full absolute top-0 left-0 scale-110"
+                      autoPlay
+                      loop
+                      muted
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Main paragraph */}
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed text-center">
+              <p className="text-lg text-gray-700 leading-relaxed text-center max-w-full">
                 This animation demonstrates the flow of power in an Energy
                 Management System (EMS). All the components in the EMS are
                 connected to the EMS device, which decides the power flow from
@@ -46,21 +79,6 @@ const Home = () => {
                 the grid, which indicates that the power is being sold to the
                 grid and making a profit.
               </p>
-              {/* Video animation */}
-              <div className="flex flex-col align-center">
-                <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
-                  Power Flow
-                </h2>
-                <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl">
-                  <video
-                    src="/assets/2nd_tab_big.mp4"
-                    className="object-cover w-full h-full absolute top-0 left-0 right-0 bottom-0"
-                    autoPlay
-                    loop
-                    muted
-                  />
-                </div>
-              </div>
             </div>
 
             <div className="flex flex-col md:flex-row gap-8 mt-10">

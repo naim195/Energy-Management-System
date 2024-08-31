@@ -7,10 +7,12 @@ const Graphs = () => {
           Power Flow
         </h2>
         <div className="flex justify-center mb-6">
-          <img
+          <video
             id="gif3"
-            src="/assets/load_animation_combined.gif"
+            src="/assets/Impact/all_50ms_grid_connected_Power_flow_animation.mp4"
             alt="Power Flow Animation"
+            autoPlay
+            loop
           />
         </div>
         <div className="description text-gray-800 text-center max-w-3xl">
@@ -65,7 +67,7 @@ const Graphs = () => {
           Cost Breakdown
         </h2>
         <div className="flex justify-center mb-6">
-          <video src="/assets/1440_Grid_price.mp4" autoPlay loop />
+          <video src="/assets/Impact/1440_Grid_price.mp4" autoPlay loop />
         </div>
         <div className="description text-gray-800 text-center max-w-3xl mx-auto">
           <p className="text-sm">
@@ -82,7 +84,7 @@ const Graphs = () => {
         <h2 className="text-2xl font-bold mb-4 text-center text-yellow-800">
           Carbon Emission Comparison
         </h2>
-        <video src="/assets/all_CO2_Emissions.mp4" autoPlay loop />
+        <video src="/assets/Impact/all_CO2_Emissions.mp4" autoPlay loop />
       </div>
     </div>
   );
