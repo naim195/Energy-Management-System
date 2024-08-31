@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-blue-200 to-green-200 min-h-screen flex flex-col items-center justify-center p-5">
+    <div className="bg-gradient-to-r from-blue-200 to-green-200 min-h-screen flex flex-col items-center justify-center p-5">
       <div
         className={`flex flex-col md:flex-row gap-8 items-center justify-center transform ${animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >

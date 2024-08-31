@@ -15,7 +15,7 @@ export default function Header() {
   const location = useLocation();
 
   return (
-    <header className="bg-white  w-full z-10 h-25">
+    <header className="bg-blue-100 w-full z-10 h-25">
       <nav
         aria-label="Global"
         className="flex max-w-full items-center justify-between p-6 lg:px-8 h-full"
@@ -39,7 +39,7 @@ export default function Header() {
             <Link
               key={item.name}
               to={item.href}
-              className={`text-sm font-semibold leading-6 px-3 py-2 rounded-lg ${
+              className={`text-2xl font-semibold leading-6 px-3 py-2 rounded-lg ${
                 location.pathname === item.href
                   ? "text-white bg-blue-600"
                   : "text-gray-900 hover:bg-gray-100"

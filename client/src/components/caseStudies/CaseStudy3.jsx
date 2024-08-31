@@ -62,50 +62,50 @@ const CaseStudy3 = () => {
               <thead>
                 <tr>
                   <th>Section</th>
-                  <th className="text">Total Price ON-Grid (₹)</th>
-                  <th className="text">Total Price Dual-Mode (₹)</th>
+                  <th className="text-center">Total Price ON-Grid (₹ cr)</th>
+                  <th className="text-center">Total Price Dual-Mod (₹ cr)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>PV</td>
-                  <td className="text">51,574,854.70</td>
-                  <td className="text">51,574,854.70</td>
+                  <td className="text-center">5.16</td>
+                  <td className="text-center">5.16</td>
                 </tr>
                 <tr>
                   <td>Battery</td>
-                  <td className="text">0</td>
-                  <td className="text">46,052,029.94</td>
+                  <td className="text-center">0.00</td>
+                  <td className="text-center">4.61</td>
                 </tr>
                 <tr>
                   <td>Inverter</td>
-                  <td className="text">17,192,774.21</td>
-                  <td className="text">17,192,774.21</td>
+                  <td className="text-center">1.72</td>
+                  <td className="text-center">1.72</td>
                 </tr>
                 <tr>
                   <td>DC-DC converter</td>
-                  <td className="text">0</td>
-                  <td className="text">2,865,799.53</td>
+                  <td className="text-center">0.00</td>
+                  <td className="text-center">0.29</td>
                 </tr>
                 <tr>
                   <td>Installation (10%)</td>
-                  <td className="text">5,157,485.47</td>
-                  <td className="text">9,762,688.46</td>
+                  <td className="text-center">0.52</td>
+                  <td className="text-center">0.98</td>
                 </tr>
                 <tr>
                   <td>Annual interest rate</td>
-                  <td className="text">10%</td>
-                  <td className="text">10%</td>
+                  <td className="text-center">10 %</td>
+                  <td className="text-center">10 %</td>
                 </tr>
                 <tr>
                   <td>Annual O&M of PV and Battery (3%)</td>
-                  <td className="text">1,547,245.64</td>
-                  <td className="text">2,928,806.54</td>
+                  <td className="text-center">0.15</td>
+                  <td className="text-center">0.29</td>
                 </tr>
                 <tr>
                   <td>Capital Cost</td>
-                  <td>7,39,25,114.38</td>
-                  <td>12,74,48,146.48</td>
+                  <td className="text-center">7.39</td>
+                  <td className="text-center">12.74</td>
                 </tr>
               </tbody>
             </table>
