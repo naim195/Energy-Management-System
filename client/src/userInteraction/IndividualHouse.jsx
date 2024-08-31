@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppliancesTable from "./AppliancesTable";
 import Miscellanous from "./Miscellanous";
 import axios from "axios";
@@ -9,7 +9,6 @@ import Alert from "@mui/material/Alert";
 const IndividualHouse = () => {
   const {
     choices,
-
     handleChoiceChange,
     applianceNamesEnergyCost,
     setApplianceNamesEnergyCost,
@@ -85,6 +84,29 @@ const IndividualHouse = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // State for Snackbar severity
+
+  // Save all necessary data to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("choices", JSON.stringify(choices));
+    localStorage.setItem("totalEnergyUsage", JSON.stringify(totalEnergyUsage));
+    localStorage.setItem(
+      "applianceNamesEnergyCost",
+      JSON.stringify(applianceNamesEnergyCost),
+    );
+    localStorage.setItem(
+      "miscellaneousItems",
+      JSON.stringify(miscellaneousItems),
+    );
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+  }, [
+    choices,
+    totalEnergyUsage,
+    applianceNamesEnergyCost,
+    miscellaneousItems,
+    name,
+    email,
+  ]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
