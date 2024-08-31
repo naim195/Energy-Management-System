@@ -25,7 +25,7 @@ const CaseStudy1 = () => {
     setOpen(false);
 
     try {
-      const totalEnergyUsageNumber = parseFloat(totalEnergyUsageInput);
+      const totalEnergyUsageNumber = parseFloat(totalEnergyUsageInput / 1000);
 
       const res = await axios.post(
         "https://python-api-orcin.vercel.app/solar-battery-calculation",
@@ -78,13 +78,15 @@ const CaseStudy1 = () => {
             </label>
           </div>
 
-          <button
-            onClick={handleSubmit}
-            className="btn btn-primary"
-            disabled={loading}
-          >
-            {loading ? "Calculating..." : "Calculate"}
-          </button>
+          <div className="flex justify-center max-w-full">
+            <button
+              onClick={handleSubmit}
+              className="btn bg-blue-300 text-lg max-w-2xl"
+              disabled={loading}
+            >
+              {loading ? "Calculating..." : "Calculate"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -128,7 +130,9 @@ const CaseStudy1 = () => {
                     <td className=" px-4 py-2">
                       {response["Economic Analysis"]["Solar Panel Cost (Rs)"]}
                     </td>
-                    <td className=" px-4 py-2">0</td>
+                    <td className=" px-4 py-2">
+                      {response["Economic Analysis"]["Solar Panel Cost (Rs)"]}
+                    </td>
                   </tr>
                   <tr>
                     <td className=" px-4 py-2">Battery Cost</td>
@@ -142,7 +146,9 @@ const CaseStudy1 = () => {
                     <td className=" px-4 py-2">
                       {response["Economic Analysis"]["Inverter Cost (Rs)"]}
                     </td>
-                    <td className=" px-4 py-2">0</td>
+                    <td className=" px-4 py-2">
+                      {response["Economic Analysis"]["Inverter Cost (Rs)"]}
+                    </td>
                   </tr>
                   <tr>
                     <td className=" px-4 py-2">DC-DC Converter Cost</td>
@@ -287,7 +293,7 @@ const CaseStudy1 = () => {
                   <img
                     src={`data:image/png;base64,${response["Plots"]["Simple Payback Period Comparison"]}`}
                     alt="Simple Payback Period Comparison"
-                    className="w-3/4 h-auto rounded-lg shadow-md"
+                    className="w-1/2 h-auto rounded-lg shadow-md"
                   />
                 </div>
               </div>
@@ -321,7 +327,7 @@ const CaseStudy1 = () => {
                   <img
                     src={`data:image/png;base64,${response["Plots"]["Carbon Emission Comparison"]}`}
                     alt="Carbon Emission Comparison"
-                    className="w-3/4 rounded-lg shadow-md"
+                    className="w-1/2 rounded-lg shadow-md"
                   />
                 </div>
               </div>

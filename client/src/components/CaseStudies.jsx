@@ -17,7 +17,7 @@ const CaseStudies = () => {
           }`}
           onClick={() => setActiveSection("Case Study 1")}
         >
-          Case Study 1
+          Customize your EMS
         </button>
         <button
           className={`mx-2 px-4 py-2 rounded-lg ${
@@ -27,7 +27,7 @@ const CaseStudies = () => {
           }`}
           onClick={() => setActiveSection("Case Study 2")}
         >
-          Case Study 2
+          Aging Aware PV Digital Twins
         </button>
         <button
           className={`mx-2 px-4 py-2 rounded-lg ${
@@ -37,7 +37,7 @@ const CaseStudies = () => {
           }`}
           onClick={() => setActiveSection("Case Study 3")}
         >
-          Case Study 3
+          EMS for Community Microgrid
         </button>
       </div>
       <div className="border p-6 rounded-lg bg-white shadow-md bg-gradient-to-r from-blue-100 to-green-100">

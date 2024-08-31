@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   ArrowBigDown,
-  ArrowBigUp,
   Battery,
   Zap,
   Gauge,
@@ -35,7 +34,7 @@ const Home = () => {
               <div className="flex flex-col md:flex-row gap-8 w-full">
                 <div className="w-full md:w-1/2">
                   <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
-                    Power Flow
+                    Grid Connected Mode EMS
                   </h2>
                   <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl border-4 ">
                     <video
@@ -50,7 +49,7 @@ const Home = () => {
 
                 <div className="w-full md:w-1/2">
                   <h2 className="text-2xl font-bold text-blue-700 mb-2 text-center">
-                    Island Mode Power Flow
+                    Island Mode EMS
                   </h2>
                   <div className="relative pt-[75%] rounded-lg overflow-hidden shadow-xl border-4 ">
                     <video
@@ -65,8 +64,8 @@ const Home = () => {
               </div>
 
               {/* Main paragraph */}
-              <p className="text-lg text-gray-700 leading-relaxed text-center max-w-full">
-                This animation demonstrates the flow of power in an Energy
+              <p className="text-lg text-gray-700 leading-relaxed text-justify max-w-full">
+                This visualization demonstrates the flow of power in an Energy
                 Management System (EMS). All the components in the EMS are
                 connected to the EMS device, which decides the power flow from
                 each component depending on availability and the cost associated
@@ -117,7 +116,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-green-50 rounded-lg shadow-inner">
+            {/* <div className="mt-8 p-4 bg-green-50 rounded-lg shadow-inner">
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Energy Optimization Strategy
               </h3>
@@ -139,7 +138,7 @@ const Home = () => {
                 <ArrowBigUp className="text-red-500 mr-2" size={24} />
                 <span>High Cost</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

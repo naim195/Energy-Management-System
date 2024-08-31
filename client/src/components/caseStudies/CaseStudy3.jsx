@@ -102,6 +102,11 @@ const CaseStudy3 = () => {
                   <td className="text">1,547,245.64</td>
                   <td className="text">2,928,806.54</td>
                 </tr>
+                <tr>
+                  <td>Capital Cost</td>
+                  <td>7,39,25,114.38</td>
+                  <td>12,74,48,146.48</td>
+                </tr>
               </tbody>
             </table>
           </div>

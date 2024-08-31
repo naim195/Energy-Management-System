@@ -51,7 +51,7 @@ const CaseStudy2 = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
+    <div className="max-w-6xl mx-auto p-6 space-y-8">
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold mb-6 text-center">
@@ -96,13 +96,15 @@ const CaseStudy2 = () => {
             </label>
           </div>
 
-          <button
-            onClick={handleSubmit}
-            className="btn btn-primary"
-            disabled={loading}
-          >
-            {loading ? "Calculating..." : "Calculate"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={handleSubmit}
+              className="btn bg-blue-300 text-lg max-w-2xl"
+              disabled={loading}
+            >
+              {loading ? "Calculating..." : "Calculate"}
+            </button>
+          </div>
         </div>
       </div>
 
