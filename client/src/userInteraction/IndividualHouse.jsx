@@ -323,7 +323,7 @@ const IndividualHouse = () => {
       <div className="flex justify-center">
         <button
           type="submit"
-          className="btn btn-primary btn-wide"
+          className="btn bg-blue-300 btn-wide text-lg"
           onClick={handleSubmit}
         >
           Submit
