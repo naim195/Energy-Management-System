@@ -15,7 +15,7 @@ export default function Header() {
   const location = useLocation();
 
   return (
-    <header className="bg-blue-100 w-full z-10 h-25">
+    <header className="bg-gradient-to-r from-blue-100 to-green-100 w-full z-10 h-25">
       <nav
         aria-label="Global"
         className="flex max-w-full items-center justify-between p-6 lg:px-8 h-full"
