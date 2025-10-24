@@ -19,7 +19,7 @@ This project is a full-stack web application developed as part of a project cour
 
 ---
 
-## Technologies Used 💻
+## Technologies Used
 
 * **Frontend**: React, Tailwind CSS, DaisyUI, Axios, Framer Motion, Lucide Icons, Headless UI, Material UI
 * **Backend**: Node.js, Express.js
