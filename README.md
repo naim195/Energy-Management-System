@@ -39,7 +39,7 @@ This project is a full-stack web application developed as part of a project cour
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/naim195/Energy-Management-System.git](https://github.com/naim195/Energy-Management-System.git)
+    git clone https://github.com/naim195/Energy-Management-System.git
     cd Energy-Management-System
     ```
 
